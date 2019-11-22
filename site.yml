@@ -1,0 +1,13 @@
+name: "final"
+output_dir: "."
+navbar:
+  title: "Home"
+  right:
+    - text: "Report"
+      href: Report.html
+    - text: "Dashboard"
+      href: Dashboard.html
+   
+output:
+  html_document:
+    theme: journal
