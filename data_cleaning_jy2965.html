@@ -400,7 +400,7 @@ janitor::clean_names()  </code></pre>
 ##   # ... with 2 more columns
 ## )</code></pre>
 <pre><code>## See spec(...) for full column specifications.</code></pre>
-<pre class="r"><code>skimr::skim(squrriel)</code></pre>
+<pre class="r"><code>skimr::skim(squrriel) # observe the distribution of our dataset</code></pre>
 <pre><code>## Skim summary statistics
 ##  n obs: 3023 
 ##  n variables: 36 
@@ -474,6 +474,38 @@ janitor::clean_names()  </code></pre>
 ##    -73.98   -73.97   -73.97   -73.96   -73.95 ▃▆▇▆▅▆▅▂
 ##     40.76    40.77    40.78    40.79    40.8  ▆▇▇▅▂▅▆▅
 ##  10090    12081    12420    12423    12423    ▃▁▁▁▁▁▃▇</code></pre>
+</div>
+<div id="data-cleaning" class="section level2">
+<h2>Data Cleaning</h2>
+<pre class="r"><code>squrriel = read_csv(&quot;/Users/junyin/Desktop/data science/p8105_final/data/2018_Central_Park_Squirrel_Census_-_Squirrel_Data.csv&quot;) %&gt;% 
+janitor::clean_names() %&gt;% 
+mutate(sighter_measurement = as.numeric(above_ground_sighter_measurement))</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   .default = col_character(),
+##   X = col_double(),
+##   Y = col_double(),
+##   Date = col_double(),
+##   `Hectare Squirrel Number` = col_double(),
+##   Running = col_logical(),
+##   Chasing = col_logical(),
+##   Climbing = col_logical(),
+##   Eating = col_logical(),
+##   Foraging = col_logical(),
+##   Kuks = col_logical(),
+##   Quaas = col_logical(),
+##   Moans = col_logical(),
+##   `Tail flags` = col_logical(),
+##   `Tail twitches` = col_logical(),
+##   Approaches = col_logical(),
+##   Indifferent = col_logical(),
+##   `Runs from` = col_logical(),
+##   `Zip Codes` = col_double(),
+##   `Community Districts` = col_double(),
+##   `Borough Boundaries` = col_double()
+##   # ... with 2 more columns
+## )</code></pre>
+<pre><code>## See spec(...) for full column specifications.</code></pre>
 </div>
 
 
