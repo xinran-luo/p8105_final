@@ -301,139 +301,25 @@ $(document).ready(function () {
 <div id="importing-data" class="section level2">
 <h2>Importing Data</h2>
 <pre class="r"><code>squrriel = read_csv(&quot;/Users/junyin/Desktop/data science/p8105_final/data/2018_Central_Park_Squirrel_Census_-_Squirrel_Data.csv&quot;) %&gt;% 
-janitor::clean_names()  </code></pre>
-<pre><code>## Parsed with column specification:
-## cols(
-##   .default = col_character(),
-##   X = col_double(),
-##   Y = col_double(),
-##   Date = col_double(),
-##   `Hectare Squirrel Number` = col_double(),
-##   Running = col_logical(),
-##   Chasing = col_logical(),
-##   Climbing = col_logical(),
-##   Eating = col_logical(),
-##   Foraging = col_logical(),
-##   Kuks = col_logical(),
-##   Quaas = col_logical(),
-##   Moans = col_logical(),
-##   `Tail flags` = col_logical(),
-##   `Tail twitches` = col_logical(),
-##   Approaches = col_logical(),
-##   Indifferent = col_logical(),
-##   `Runs from` = col_logical(),
-##   `Zip Codes` = col_double(),
-##   `Community Districts` = col_double(),
-##   `Borough Boundaries` = col_double()
-##   # ... with 2 more columns
-## )</code></pre>
-<pre><code>## See spec(...) for full column specifications.</code></pre>
-<pre class="r"><code>skimr::skim(squrriel) # observe the distribution of our dataset</code></pre>
-<pre><code>## Skim summary statistics
-##  n obs: 3023 
-##  n variables: 36 
-## 
-## ── Variable type:character ─────────────────────────────────────────────────
-##                                    variable missing complete    n min max
-##            above_ground_sighter_measurement     114     2909 3023   1   5
-##                                         age     121     2902 3023   1   8
-##                                 color_notes    2841      182 3023   3 153
-##  combination_of_primary_and_highlight_color       0     3023 3023   1  27
-##                                     hectare       0     3023 3023   3   3
-##                         highlight_fur_color    1086     1937 3023   4  22
-##                                    lat_long       0     3023 3023  38  45
-##                                    location      64     2959 3023  12  12
-##                            other_activities    2586      437 3023   4 132
-##                          other_interactions    2783      240 3023   2 106
-##                           primary_fur_color      55     2968 3023   4   8
-##                                       shift       0     3023 3023   2   2
-##                           specific_location    2547      476 3023   4 102
-##                          unique_squirrel_id       0     3023 3023  13  14
-##  empty n_unique
-##      0       41
-##      0        3
-##      0      135
-##      0       22
-##      0      339
-##      0       10
-##      0     3023
-##      0        2
-##      0      307
-##      0      197
-##      0        3
-##      0        2
-##      0      304
-##      0     3018
-## 
-## ── Variable type:logical ───────────────────────────────────────────────────
-##       variable missing complete    n    mean                       count
-##     approaches       0     3023 3023 0.059    FAL: 2845, TRU: 178, NA: 0
-##        chasing       0     3023 3023 0.092    FAL: 2744, TRU: 279, NA: 0
-##       climbing       0     3023 3023 0.22     FAL: 2365, TRU: 658, NA: 0
-##         eating       0     3023 3023 0.25     FAL: 2263, TRU: 760, NA: 0
-##       foraging       0     3023 3023 0.47    FAL: 1588, TRU: 1435, NA: 0
-##    indifferent       0     3023 3023 0.48    FAL: 1569, TRU: 1454, NA: 0
-##           kuks       0     3023 3023 0.034    FAL: 2921, TRU: 102, NA: 0
-##          moans       0     3023 3023 0.00099    FAL: 3020, TRU: 3, NA: 0
-##          quaas       0     3023 3023 0.017     FAL: 2973, TRU: 50, NA: 0
-##        running       0     3023 3023 0.24     FAL: 2293, TRU: 730, NA: 0
-##      runs_from       0     3023 3023 0.22     FAL: 2345, TRU: 678, NA: 0
-##     tail_flags       0     3023 3023 0.051    FAL: 2868, TRU: 155, NA: 0
-##  tail_twitches       0     3023 3023 0.14     FAL: 2589, TRU: 434, NA: 0
-## 
-## ── Variable type:numeric ───────────────────────────────────────────────────
-##                 variable missing complete    n     mean         sd
-##       borough_boundaries       0     3023 3023     4        0     
-##   city_council_districts       0     3023 3023    19.07     1.35  
-##      community_districts       0     3023 3023    19        0.23  
-##                     date       0     3023 3023 1e+07    42466.71  
-##  hectare_squirrel_number       0     3023 3023     4.12     3.1   
-##         police_precincts       0     3023 3023    13        0.22  
-##                        x       0     3023 3023   -73.97     0.0077
-##                        y       0     3023 3023    40.78     0.01  
-##                zip_codes    3014        9 3023 11828.22   995.98  
-##        p0      p25      p50      p75     p100     hist
-##      4        4        4        4        4    ▁▁▁▇▁▁▁▁
-##     19       19       19       19       51    ▇▁▁▁▁▁▁▁
-##     11       19       19       19       23    ▁▁▁▁▁▇▁▁
-##  1e+07    1e+07    1e+07    1e+07    1e+07    ▇▃▃▇▃▁▅▂
-##      1        2        3        6       23    ▇▅▂▁▁▁▁▁
-##     10       13       13       13       18    ▁▁▇▁▁▁▁▁
-##    -73.98   -73.97   -73.97   -73.96   -73.95 ▃▆▇▆▅▆▅▂
-##     40.76    40.77    40.78    40.79    40.8  ▆▇▇▅▂▅▆▅
-##  10090    12081    12420    12423    12423    ▃▁▁▁▁▁▃▇</code></pre>
+janitor::clean_names()  
+skimr::skim(squrriel) # observe the distribution of our dataset</code></pre>
 </div>
 <div id="data-cleaning" class="section level2">
 <h2>Data Cleaning</h2>
+<p>reclassify some variables with missing values. give character variables different level. Create new variable to represent research date for futher work.</p>
 <pre class="r"><code>squrriel = read_csv(&quot;/Users/junyin/Desktop/data science/p8105_final/data/2018_Central_Park_Squirrel_Census_-_Squirrel_Data.csv&quot;) %&gt;% 
 janitor::clean_names() %&gt;% 
-mutate(sighter_measurement = as.numeric(above_ground_sighter_measurement))</code></pre>
-<pre><code>## Parsed with column specification:
-## cols(
-##   .default = col_character(),
-##   X = col_double(),
-##   Y = col_double(),
-##   Date = col_double(),
-##   `Hectare Squirrel Number` = col_double(),
-##   Running = col_logical(),
-##   Chasing = col_logical(),
-##   Climbing = col_logical(),
-##   Eating = col_logical(),
-##   Foraging = col_logical(),
-##   Kuks = col_logical(),
-##   Quaas = col_logical(),
-##   Moans = col_logical(),
-##   `Tail flags` = col_logical(),
-##   `Tail twitches` = col_logical(),
-##   Approaches = col_logical(),
-##   Indifferent = col_logical(),
-##   `Runs from` = col_logical(),
-##   `Zip Codes` = col_double(),
-##   `Community Districts` = col_double(),
-##   `Borough Boundaries` = col_double()
-##   # ... with 2 more columns
-## )</code></pre>
-<pre><code>## See spec(...) for full column specifications.</code></pre>
+mutate(age_group = ifelse(age %in% &quot;Adult&quot;,&quot;Adult&quot;,ifelse(age %in% &quot;Juvenile&quot;,&quot;Juvenile&quot;,&quot;Unknown&quot;)),
+      age_group = fct_relevel(as.factor(age_group),c(&quot;Juvenile&quot;,&quot;Adult&quot;,&quot;Unknown&quot;)),
+      location = fct_relevel(as.factor(location),c(&quot;Above Ground&quot;,&quot;Ground Plane&quot;)),
+      primary_fur_color = fct_relevel(as.factor(primary_fur_color),c(&quot;Cinnamon&quot;,&quot;Gray&quot;,&quot;Black&quot;))) %&gt;% 
+separate(date,into=c(&#39;day&#39;,&#39;year&#39;),sep=4) %&gt;% 
+separate(day,into = c(&#39;month&#39;,&#39;Date&#39;), sep=2) %&gt;% 
+mutate(Day = recode(Date, &quot;06&quot;=&quot;Day1&quot;, &quot;07&quot;=&quot;Day2&quot;, &quot;08&quot;=&quot;Day3&quot;, &quot;10&quot;=&quot;Day4&quot;, &quot;12&quot;=&quot;Day5&quot;, &quot;13&quot;=&quot;Day6&quot;, &quot;14&quot;=&quot;Day7&quot;, &quot;17&quot;=&quot;Day8&quot;, &quot;18&quot;=&quot;Day9&quot;, &quot;19&quot;=&quot;Day10&quot;, &quot;20&quot;=&quot;Day11&quot;),
+       Day = fct_relevel(Day, c(&quot;Day1&quot;, &quot;Day2&quot;, &quot;Day3&quot;, &quot;Day4&quot;, &quot;Day5&quot;, &quot;Day6&quot;, &quot;Day7&quot;, &quot;Day8&quot;, &quot;Day9&quot;, &quot;Day10&quot;, &quot;Day11&quot;)))</code></pre>
+</div>
+<div id="data-visulization" class="section level2">
+<h2>Data Visulization</h2>
 </div>
 
 
