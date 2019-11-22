@@ -46,7 +46,6 @@ skimr::skim(squrriel) # observe the distribution of our dataset
 
 
 ```{r}
-
 squrriel = read_csv("/Users/junyin/Desktop/data science/p8105_final/data/2018_Central_Park_Squirrel_Census_-_Squirrel_Data.csv") %>% 
 janitor::clean_names() %>% 
 mutate(sighter_measurement = as.numeric(above_ground_sighter_measurement))
