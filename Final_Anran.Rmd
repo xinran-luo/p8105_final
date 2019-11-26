@@ -2,13 +2,15 @@
 title: "Final_Anran"
 output: html_document
 editor_options: 
-  chunk_output_type: console
+  chunk_output_type: inline
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(rvest)
+library(plotly)
+library(ggplot2)
 
 
 knitr::opts_chunk$set(
@@ -46,7 +48,7 @@ litter,
 
 ## clean the dataset. 
 
-```{r, error = TRUE }
+```{r}
 numextract <- function(string){ 
   str_extract(string, "\\-*\\d+\\.*\\d*")
 }
@@ -55,16 +57,84 @@ hectare =
   hectare %>% 
   mutate(
       temperature_fahrenheit = numextract(sighter_observed_weather_data),
-      temperature_fahrenheit = recode(temperature_fahrenheit, `-50` = "NA"),
       rate = number_of_squirrels/total_time_of_sighting
+)
+```
+
+
+### temperature plot
+
+```{r}
+temperature_df =   
+hectare %>%   
+  filter(temperature_fahrenheit > 29) %>% 
+  mutate(
+    temperature_fahrenheit = recode(temperature_fahrenheit, `-50` = "50"),
+    temperature_category = ifelse(temperature_fahrenheit <= "50", "below 50",
+                           ifelse("50"< temperature_fahrenheit & temperature_fahrenheit<= "60", "50-60",
+                             ifelse("60"< temperature_fahrenheit & temperature_fahrenheit<= "70", "60-70",
+                               ifelse("70"< temperature_fahrenheit, "above 70","others")))),
+    temperature_category = as.factor(temperature_category)
+ ) %>% 
+  plot_ly( y = ~rate, color = ~temperature_category, type = "box", colors = "Set3")
+
+temperature_df
+
+```
+
+### condition and litter plot 
+
+
+```{r}
+plot_condition_litter = 
+  hectare %>% 
+  select(hectare_conditions, litter,rate) %>%
+  na.omit() %>% 
+  ggplot(aes(x = hectare_conditions, y = rate, fill = litter)) +
+  geom_bar(stat = "identity", position = "fill") + 
+  labs(
+    title = "Distribution of datavalues for each response in 2006 and 2010 among locations in NY" 
+  )
+plot_condition_litter 
+```
+
+
+```{r,error=TRUE}
+sunburst = 
+  hectare %>% 
+  select(hectare_conditions, litter, rate) %>% 
+  na.omit() %>% 
+mutate(
+  rate = round(sunburst$rate,digits = 2)
 ) %>% 
+  
+  
+df = 
+  sunburst %>%
+  group_by(hectare_conditions, rate) %>% 
+  summarize(
+    sum = sum(rate)
 
-  ggplot(aes(x = temperature_fahrenheit, y = rate, group = temperature_fahrenheit)) + geom_point()
+  )
 
-## numbers for each temperature. (-50 is not temprature.).   to categorize the temperature?????? 
+p <- plot_ly(
+  labels = c("Eve", "Cain", "Seth", "Enos", "Noam", "Abel", "Awan", "Enoch", "Azura"),
+  parents = c("", "Eve", "Eve", "Seth", "Seth", "Eve", "Eve", "Awan", "Eve"),
+  values = c(10, 14, 12, 10, 2, 6, 6, 4, 4),
+  type = 'sunburst'
+)
+```
+
+
+
+
+
+
+
 
 temperature = 
   hectare %>% 
+  filter(temperature_fahrenheit > 29) %>% 
   select(sighter_observed_weather_data, temperature_fahrenheit) %>% 
   na.omit()
   count(temperature, temperature_fahrenheit) %>% view()
