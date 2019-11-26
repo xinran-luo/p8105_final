@@ -75,7 +75,8 @@ hectare %>%
                              ifelse("60"< temperature_fahrenheit & temperature_fahrenheit<= "70", "60-70",
                                ifelse("70"< temperature_fahrenheit, "above 70","others")))),
     temperature_category = as.factor(temperature_category)
- ) %>% 
+ ) %>%
+  mutate(temperature_category=forcats::fct_relevel(temperature_category,c("below 50","50-60","60-70","above 70")))%>%
   plot_ly( y = ~rate, color = ~temperature_category, type = "box", colors = "Set3")
 
 temperature_df
@@ -89,7 +90,10 @@ temperature_df
 plot_condition_litter = 
   hectare %>% 
   select(hectare_conditions, litter,rate) %>%
-  na.omit() %>% 
+  na.omit()%>%
+  mutate(
+    hectare_conditions=as.factor(hectare_conditions),
+    hectare_conditions=forcats::fct_relevel(hectare_conditions,c("Calm","Calm, Busy","Medium","Moderate","Busy")))%>% 
   ggplot(aes(x = hectare_conditions, y = rate, fill = litter)) +
   geom_bar(stat = "identity", position = "fill") + 
   labs(
