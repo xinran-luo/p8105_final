@@ -1,0 +1,102 @@
+---
+title: "Shiny Dashboard"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(tidyverse)
+library(readxl)
+library(patchwork)
+library(rvest)
+library(httr)
+library(plotly)
+
+```
+
+## Importing Data
+
+```{r,message=FALSE}
+
+squrriel = read_csv("./data/2018_Central_Park_Squirrel_Census_-_Squirrel_Data.csv") %>% 
+janitor::clean_names()  
+```
+
+
+## Data Cleaning
+
+
+```{r,message=FALSE}
+squrriel = read_csv("./data/2018_Central_Park_Squirrel_Census_-_Squirrel_Data.csv") %>% 
+janitor::clean_names() %>% 
+mutate(sighter_measurement = as.numeric(above_ground_sighter_measurement),
+       age = ifelse(age %in% "Adult","Adult",ifelse(age %in% "Juvenile","Juvenile","Unknown")),
+       primary_fur_color = ifelse(is.na(primary_fur_color) == TRUE, 'NA', primary_fur_color))%>%
+separate(date,into=c('day','year'),sep=4) %>% 
+  separate(day,into = c('month','day'), sep=2)%>%
+mutate(day=as.numeric(day))%>%
+rename(lat=y,long=x)%>%
+select(-month, -year,-color_notes, -specific_location, -other_activities, -other_interactions,-lat_long)
+
+
+```
+rename NA
+combine days
+all
+
+Column {.sidebar}
+-----------------------------------------------------------------------
+
+```{r}
+fur_color = squrriel %>% distinct(primary_fur_color) %>% pull()
+# selectInput widget
+selectInput(
+  "primary fur color", 
+  label = h3("Select fur color"),
+  choices = fur_color)
+
+days = squrriel %>% distinct(day)%>%arrange(day)%>%pull()
+# selectInput widget
+selectInput(
+  "observe day", 
+  label = h4("Select the day"),
+  choices = days)
+
+```
+
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### Chart A
+
+```{r}
+renderPlotly({ 
+squrriel %>%
+  filter(
+      primary_fur_color == input[["primary fur color"]], 
+      day == input[["observe day"]]) %>% 
+  mutate(text_label=hectare_squirrel_number)%>%
+  plot_ly(
+    x = ~lat, y = ~long, type = "scatter", mode = "markers",
+    color = ~hectare_squirrel_number, text = ~text_label, alpha = 0.5)
+})
+```
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Chart B
+
+```{r}
+
+```
+
+### Chart C
+
+```{r}
+
+```
