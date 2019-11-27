@@ -2,15 +2,12 @@
 title: "map"
 author: "xinran"
 date: "11/25/2019"
-output: github_document
+output: html_document
 ---
 ```{r setup, include=FALSE}
 library(tidyverse)
-library(readxl)
-library(patchwork)
-library(rvest)
-library(httr)
-library(plotly)
+library(viridis)
+library(leaflet)
 knitr::opts_chunk$set(
 	echo = TRUE,
 	warning = FALSE,
@@ -25,7 +22,6 @@ options(
 scale_colour_discrete = scale_colour_viridis_d
 scale_fill_discrete = scale_fill_viridis_d
 theme_set(theme_minimal() + theme(legend.position = "bottom"))
-
 ```
 
 
@@ -53,12 +49,7 @@ rename(lat=y,
        long=x)
 ```
 
-## making a map
-```{r}
-squrriel %>%
-  ggplot(aes(x = lat, y = long, color = hectare_squirrel_number)) +
-  geom_point(alpha = .3)
-```
+
 ## make
 
 ```{r}
@@ -68,5 +59,23 @@ squrriel %>%
     x = ~lat, y = ~long, type = "scatter", mode = "markers",
     color = ~hectare_squirrel_number, text = ~text_label, alpha = 0.5)
 ```
+
+```{r}
+pal <- colorNumeric(
+  palette = "viridis",
+  domain = squrriel$hectare_squirrel_number)
+
+squrriel%>%
+  mutate(
+    label=hectare_squirrel_number)%>%
+  leaflet()%>%
+  addTiles()%>%
+  addProviderTiles(providers$Esri.NatGeoWorldMap)%>% 
+  addCircleMarkers(
+    ~lat, ~long,
+    radius = 1,
+    popup = ~ label)
+```
+
 
 
