@@ -1,0 +1,252 @@
+---
+title: "Final_Anran"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(rvest)
+library(plotly)
+library(ggplot2)
+library(ggpubr)
+
+knitr::opts_chunk$set(
+  echo = TRUE,
+  warning = FALSE,
+  fig.width = 8,
+  fig.height = 6,
+  out.width = "90%"
+)
+
+options(
+  ggplot2.continuous.colour = "viridis",
+  ggplot2.continuous.fill = "viridis"
+)
+
+scale_colour_discrete = scale_colour_viridis_d
+scale_fill_discrete = scale_fill_viridis_d
+
+theme_set(theme_minimal() + theme(legend.position = "bottom"))
+```
+
+## load in data
+
+```{r}
+hectare = read_csv("./data_hectare/2018_Central_Park_Squirrel_Census_-_Hectare_Data.csv") %>% 
+janitor::clean_names()
+skimr::skim(hectare)
+```
+
+
+## clean the dataset. 
+
+```{r}
+numextract <- function(string){ 
+  str_extract(string, "\\-*\\d+\\.*\\d*")
+}
+
+hectare = 
+  hectare %>% 
+  mutate(
+      temperature_fahrenheit = numextract(sighter_observed_weather_data),
+      rate = number_of_squirrels/total_time_of_sighting
+)
+```
+
+
+### temperature plot
+
+```{r}
+temperature_df =   
+hectare %>%   
+  filter(temperature_fahrenheit > 29) %>% 
+  mutate(
+    temperature_fahrenheit = recode(temperature_fahrenheit, `-50` = "50"),
+    temperature_category = ifelse(temperature_fahrenheit <= "50", "below 50",
+                           ifelse("50"< temperature_fahrenheit & temperature_fahrenheit<= "60", "50-60",
+                             ifelse("60"< temperature_fahrenheit & temperature_fahrenheit<= "70", "60-70",
+                               ifelse("70"< temperature_fahrenheit, "above 70","others")))),
+    temperature_category = as.factor(temperature_category)
+ ) %>% 
+  plot_ly( y = ~rate, color = ~temperature_category, type = "box", colors = "Set3")
+
+temperature_df
+
+```
+
+
+### Condition_litter_plot 
+
+```{r}
+hectare = 
+  hectare %>% 
+  select(hectare_conditions, litter, rate) %>% 
+  na.omit() %>% 
+mutate(
+  sum = sum(rate),
+  possibility = rate/sum
+)  
+
+hectare = 
+hectare %>% 
+  mutate(
+ average =  ifelse(litter == "Abundant"& hectare_conditions == "Busy","abundant_busy",
+                ifelse(litter == "Abundant"& hectare_conditions == "Calm","abundant_calm",
+                  ifelse(litter == "Abundant"& hectare_conditions == "Medium","abundant_medium",
+         ifelse(litter == "Abundant"& hectare_conditions == "Moderate","abundant_moderate",
+
+ifelse(litter == "Some"& hectare_conditions == "Busy","some_busy",
+                ifelse(litter == "Some"& hectare_conditions == "Calm","some_calm",
+                  ifelse(litter == "Some"& hectare_conditions == "Medium","some_medium",
+         ifelse(litter == "Some"& hectare_conditions == "Moderate","some_moderate",
+
+ifelse(litter == "None"& hectare_conditions == "Busy","none_busy",
+                ifelse(litter == "None"& hectare_conditions == "Calm","none_calm",
+                  ifelse(litter == "None"& hectare_conditions == "Medium", "none_medium",
+         ifelse(litter == "None"& hectare_conditions == "Moderate","none_moderate", "others")))))))))))),
+)
+
+mean_table = 
+hectare %>% 
+  group_by(average) %>% 
+  select(hectare_conditions, litter, rate, average) %>% 
+  mutate(
+    rate_average = mean(rate, na.rm = TRUE)
+  ) %>% 
+  distinct(rate_average) %>% 
+  separate(average, into =c("litter", "hectare_condition"), sep = "_") %>% 
+  na.omit()
+
+plot = 
+mean_table %>% 
+ggballoonplot(x = "hectare_condition", y = "litter", size = "rate_average", fill = "rate_average") + 
+  scale_fill_viridis_c(option = "C")
+
+plot
+```
+
+
+
+
+
+
+### sum for each hectare
+
+  hectare %>% 
+    select(hectare, hectare_conditions, rate) %>% 
+    group_by(hectare) %>% 
+    mutate(
+      squirrel_sum = sum(rate)
+    ) %>% 
+  select(hectare, rate, squirrel_sum) %>% 
+  distinct(squirrel_sum)
+
+
+
+#### condition litter 
+
+plot_condition_litter = 
+  hectare %>% 
+  select(hectare_conditions, litter,rate) %>%
+  na.omit() %>% 
+  ggplot(aes(x = hectare_conditions, y = rate, fill = litter)) +
+  geom_bar(stat = "identity", position = "fill") + 
+  labs(
+    title = "Distribution of datavalues for each response in 2006 and 2010 among locations in NY" 
+  )
+plot_condition_litter 
+
+#### mean for each condition 
+  sunburst %>% 
+  group_by(hectare_conditions) %>% 
+  mutate(
+    mean = mean(rate)
+  ) %>% 
+distinct(mean)
+
+  
+### sum for each hectare
+  hectare %>% 
+    select(hectare, hectare_conditions, rate) %>% 
+    group_by(hectare) %>% 
+    mutate(
+      squirrel_sum = sum(rate)
+    ) %>% 
+  select(hectare, rate, squirrel_sum) %>% 
+  distinct(squirrel_sum)
+
+
+
+
+sunburst =
+sunburst %>% 
+  group_by(hectare_conditions) %>% 
+  mutate(
+    sum2 = sum(rate)
+)
+
+
+```
+
+
+
+temperature = 
+  hectare %>% 
+  filter(temperature_fahrenheit > 29) %>% 
+  select(sighter_observed_weather_data, temperature_fahrenheit) %>% 
+  na.omit()
+  count(temperature, temperature_fahrenheit) %>% view()
+
+  
+  
+#################################################
+#######################################################
+
+
+   separate(date, into = c('day','year'), sep = 4) %>% 
+   separate(day, into = c('month','date'), sep = 2) %>% 
+
+## sum of the squirrels for each day. 
+sum = 
+hectare %>% 
+  group_by(date) %>% 
+  summarise(
+    sum = sum(number_of_squirrels)
+  )
+
+## weather clean 
+clean = 
+hectare %>% 
+  select(sighter_observed_weather_data) %>% 
+  mutate(
+    weather = 
+        gsub("[^a-zA-Z]", "",hectare$sighter_observed_weather_data)
+      ) 
+
+rainy = 
+  clean %>% 
+  filter(str_detect(weather, "ain")) %>% 
+  mutate(
+    weather = "Rainy"
+  )
+
+sunny = 
+  clean %>% 
+  filter(str_detect(weather, "un")) %>% 
+  mutate(
+    weather = "Sunny"
+  )
+
+  
+
+levels(as.factor(hectare$litter))
+
+```
+
+
+
+
+ 
