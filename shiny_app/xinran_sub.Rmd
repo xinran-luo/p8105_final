@@ -98,7 +98,21 @@ Column {data-width=350}
 ### Chart B
 
 ```{r}
+renderLeaflet({pal=colorNumeric(
+  palette = "viridis",
+  domain = squrriel$hectare_squirrel_number)
 
+squrriel%>%
+  mutate(
+    label=hectare_squirrel_number)%>%
+  leaflet()%>%
+  addTiles()%>%
+  addProviderTiles(providers$Esri.NatGeoWorldMap)%>% 
+  addCircleMarkers(
+    ~long, ~lat,
+    color=~pal(hectare_squirrel_number),
+    radius = 1,
+    popup = ~ label)})
 ```
 
 ### Chart C
