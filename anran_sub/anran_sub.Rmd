@@ -43,6 +43,8 @@ skimr::skim(hectare)
 
 ## clean the dataset. 
 
+
+
 ```{r}
 numextract <- function(string){ 
   str_extract(string, "\\-*\\d+\\.*\\d*")
