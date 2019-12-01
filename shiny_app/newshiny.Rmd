@@ -97,10 +97,9 @@ squrriel_plot %>%
       activity == input[["Activity"]], 
       age_group == input[["Age Group"]]) %>% 
   mutate(text_label=number_of_ture)%>%
-  plot_ly(x = ~Day) %>% 
-    add_trace(y = ~number_of_ture, type = 'lines', mode = 'lines+markers', text = ~text_label)
+ plot_ly(x = ~Day, y = ~number_of_ture, type = "scatter", mode =  "markers", linetype = I("dash"))
 })
-
+   
 
 ```
 
