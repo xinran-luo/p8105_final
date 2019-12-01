@@ -16,6 +16,7 @@ library(rvest)
 library(httr)
 library(plotly)
 library(shiny)
+library(leaflet)
 ```
 
 
@@ -41,12 +42,7 @@ rename(lat=y,long=x)%>%
 
 select(-month, -year,-color_notes, -specific_location, -other_activities, -other_interactions,-lat_long)
 ```
-```{r}
-squrriel %>%
-  select_at(vars(running:climbing)) %>%
-  group_by(Day) %>%
-  summarise_all(c("min", "max", "mean"))
-```
+
 
 Column {.sidebar}
 -----------------------------------------------------------------------
@@ -71,10 +67,39 @@ selectInput(
 
 
 
-Column {data-width=650}
+Column {data-width=1000}
 -----------------------------------------------------------------------
 
 ### Chart A
+
+
+```{r}
+renderLeaflet({pal=colorNumeric(
+  palette = "viridis",
+  domain = squrriel$hectare_squirrel_number)
+
+squrriel%>%
+  filter(
+      primary_fur_color == input[["primary fur color"]], 
+      Day == input[["observe day"]]) %>% 
+  mutate(
+    label = paste0("<strong>hectare squirrel number: </strong> ",
+  hectare_squirrel_number))%>%
+  leaflet()%>%
+  addLegend(pal = pal, values=~hectare_squirrel_number,opacity = 0.5, title = "hectare squirrel number")%>%
+  addTiles()%>%
+  addProviderTiles(providers$Esri.NatGeoWorldMap)%>% 
+  addCircleMarkers(
+    ~long, ~lat,
+    color=~pal(hectare_squirrel_number),
+    radius = 1,
+    popup = ~ label)})
+```
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Chart B
 
 ```{r}
 renderPlotly({ 
@@ -90,29 +115,6 @@ squrriel %>%
     color = ~hectare_squirrel_number, text = ~text_label, alpha = 0.5)
 })
 
-```
-
-Column {data-width=350}
------------------------------------------------------------------------
-
-### Chart B
-
-```{r}
-renderLeaflet({pal=colorNumeric(
-  palette = "viridis",
-  domain = squrriel$hectare_squirrel_number)
-
-squrriel%>%
-  mutate(
-    label=hectare_squirrel_number)%>%
-  leaflet()%>%
-  addTiles()%>%
-  addProviderTiles(providers$Esri.NatGeoWorldMap)%>% 
-  addCircleMarkers(
-    ~long, ~lat,
-    color=~pal(hectare_squirrel_number),
-    radius = 1,
-    popup = ~ label)})
 ```
 
 ### Chart C
