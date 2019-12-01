@@ -2,14 +2,16 @@
 title: "map"
 author: "xinran"
 date: "11/25/2019"
-output: github_document
+output: html_document
+code_folding: hide
+toc: true
+toc_float: true
 ---
+
 ```{r setup, include=FALSE}
 library(tidyverse)
-library(readxl)
-library(patchwork)
-library(rvest)
-library(httr)
+library(viridis)
+library(leaflet)
 library(plotly)
 knitr::opts_chunk$set(
 	echo = TRUE,
@@ -25,27 +27,23 @@ options(
 scale_colour_discrete = scale_colour_viridis_d
 scale_fill_discrete = scale_fill_viridis_d
 theme_set(theme_minimal() + theme(legend.position = "bottom"))
-
 ```
 
 
 
 ## Importing Data
 
-```{r}
+```{r,massage=FALSE}
 
 squrriel = read_csv("./data/2018_Central_Park_Squirrel_Census_-_Squirrel_Data.csv") %>% 
 janitor::clean_names()  
-skimr::skim(squrriel) # observe the distribution of our dataset
 ```
-
-
 
 
 ## Data Cleaning
 
 
-```{r}
+```{r, message=FALSE}
 squrriel = read_csv("./data/2018_Central_Park_Squirrel_Census_-_Squirrel_Data.csv") %>% 
 janitor::clean_names() %>% 
 mutate(sighter_measurement = as.numeric(above_ground_sighter_measurement))%>%
@@ -53,20 +51,23 @@ rename(lat=y,
        long=x)
 ```
 
-## making a map
 ```{r}
-squrriel %>%
-  ggplot(aes(x = lat, y = long, color = hectare_squirrel_number)) +
-  geom_point(alpha = .3)
-```
-## make
+sqicon=makeIcon()
+pal=colorNumeric(
+  palette = "viridis",
+  domain = squrriel$hectare_squirrel_number)
 
-```{r}
-squrriel %>%
-  mutate(text_label=hectare_squirrel_number)%>%
-  plot_ly(
-    x = ~lat, y = ~long, type = "scatter", mode = "markers",
-    color = ~hectare_squirrel_number, text = ~text_label, alpha = 0.5)
+squrriel%>%
+  mutate(
+    label=hectare_squirrel_number)%>%
+  leaflet()%>%
+  addTiles()%>%
+  addProviderTiles(providers$Esri.NatGeoWorldMap)%>% 
+  addCircleMarkers(
+    ~long, ~lat,
+    color=~pal(hectare_squirrel_number),
+    radius = 1,
+    popup = ~ label)
 ```
 
 
