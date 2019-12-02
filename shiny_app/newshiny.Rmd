@@ -204,8 +204,8 @@ renderPlotly({
 squrriel_plot_3 %>%
   filter(
       age_group == input[["Age Group"]]) %>% 
- plot_ly(x = ~Day, y = ~interaction, type = 'bar', name = 'Primary Product', marker = list(color = 'rgb(149,130,189)')) %>%
-  add_trace(y = ~noninteraction, name = 'Secondary Product', marker = list(color = 'rgb(100,100,100)')) %>%
+ plot_ly(x = ~Day, y = ~interaction, type = 'bar', name = 'Interaction', marker = list(color = 'rgb(149,130,189)')) %>%
+  add_trace(y = ~noninteraction, name = 'Noninteraction', marker = list(color = 'rgb(100,100,100)')) %>%
   layout(xaxis = list(title = "", tickangle = -45),
          yaxis = list(title = ""),
          margin = list(b = 200),
