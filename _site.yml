@@ -1,13 +1,27 @@
-name: "final"
+name: "Picnic with Squirrels in Central Park"
 output_dir: "."
 navbar:
   title: "Home"
+  left:
+    - text: "Screencast"
+      href: video.html
   right:
-    - text: "Report"
-      href: Report.html
-    - text: "Dashboard"
-      href: Dashboard.html
-   
+    - text: "Data"
+      href: data.html
+    - text: "Analysis"
+      menu:
+        - text: "descriptive by anran"
+          href: .html
+        - text: "descriptive by xuan"
+          href: .html
+        - text: "Trends over time"
+          href: newshiny.html
+        - text: "Spatial trends/visualization"
+          href: xinran_sub.html
+    - icon: fa-envelope fa-lg
+      href: mailto:<xl2851@cumc.columbia.edu>
+    - icon: fa-github fa-lg
+      href: https://github.com/xinran-luo/p8105_final  
 output:
   html_document:
     theme: journal

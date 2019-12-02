@@ -1,55 +1,24 @@
----
-title: "data clean_jy2965"
-author: "Jun Yin"
-date: "11/22/2019"
-output: github_document
----
-
-```{r setup, include=FALSE}
-library(tidyverse)
-library(readxl)
-library(patchwork)
-library(rvest)
-library(httr)
-knitr::opts_chunk$set(
-	echo = TRUE,
-	warning = FALSE,
-	fig.width = 8, 
-  fig.height = 6,
-  out.width = "90%"
-)
-options(
-  ggplot2.continuous.colour = "viridis",
-  ggplot2.continuous.fill = "viridis"
-)
-scale_colour_discrete = scale_colour_viridis_d
-scale_fill_discrete = scale_fill_viridis_d
-theme_set(theme_minimal() + theme(legend.position = "bottom"))
-
-```
-
-
+data clean\_jy2965
+================
+Jun Yin
+11/22/2019
 
 ## Importing Data
 
-```{r, results='hide',message=FALSE}
+``` r
 squrriel = read_csv("./data/2018_Central_Park_Squirrel_Census_-_Squirrel_Data.csv") %>% 
 janitor::clean_names()  
 skimr::skim(squrriel) # observe the distribution of our dataset
 ```
 
-
-
-
 ## Data Cleaning
 
-reclassify some variables with missing values.
-give character variables different level.
-Create new variable to represent research date for futher work.
+reclassify some variables with missing values. give character variables
+different level. Create new variable to represent research date for
+futher
+work.
 
-
-
-```{r,message=FALSE}
+``` r
 squrriel = read_csv("./data/2018_Central_Park_Squirrel_Census_-_Squirrel_Data.csv") %>% 
 janitor::clean_names() %>% 
 mutate(age_group = ifelse(age %in% "Adult","Adult",ifelse(age %in% "Juvenile","Juvenile","Unknown")),
@@ -62,10 +31,4 @@ mutate(Day = recode(Date, "06"="Day1", "07"="Day2", "08"="Day3", "10"="Day4", "1
        Day = fct_relevel(Day, c("Day1", "Day2", "Day3", "Day4", "Day5", "Day6", "Day7", "Day8", "Day9", "Day10", "Day11")))
 ```
 
-
 ## Data Visulization
-
-```{r}
-
-```
-

@@ -1,5 +1,5 @@
 ---
-title: "Shiny Dashboard"
+title: "The distribution of squirriels by fur color and sighting day"
 output: 
   flexdashboard::flex_dashboard:
     orientation: columns
@@ -59,7 +59,7 @@ selectInput(
 days = squrriel %>% distinct(Day)%>%arrange(Day)%>%pull()
 # selectInput widget
 selectInput(
-  "observe day", 
+  "sighting day", 
   label = h3("Select the day"),
   choices = days)
 
@@ -70,7 +70,7 @@ selectInput(
 Column {data-width=1000}
 -----------------------------------------------------------------------
 
-### Chart A
+### The distribution of squirriels by fur color and sighting day
 
 
 ```{r}
@@ -81,7 +81,7 @@ renderLeaflet({pal=colorNumeric(
 squrriel%>%
   filter(
       primary_fur_color == input[["primary fur color"]], 
-      Day == input[["observe day"]]) %>% 
+      Day == input[["sighting day"]]) %>% 
   mutate(
     label = paste0("<strong>hectare squirrel number: </strong> ",
   hectare_squirrel_number))%>%
@@ -106,7 +106,7 @@ renderPlotly({
 squrriel %>%
   filter(
       primary_fur_color == input[["primary fur color"]], 
-      Day == input[["observe day"]]) %>% 
+      Day == input[["sighting day"]]) %>% 
   mutate(
     hectare_squirrel_number=as.integer(hectare_squirrel_number),
     text_label=hectare_squirrel_number)%>%
