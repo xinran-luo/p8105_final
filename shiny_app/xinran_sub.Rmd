@@ -96,29 +96,3 @@ squrriel%>%
     popup = ~ label)})
 ```
 
-Column {data-width=350}
------------------------------------------------------------------------
-
-### Chart B
-
-```{r}
-renderPlotly({ 
-squrriel %>%
-  filter(
-      primary_fur_color == input[["primary fur color"]], 
-      Day == input[["sighting day"]]) %>% 
-  mutate(
-    hectare_squirrel_number=as.integer(hectare_squirrel_number),
-    text_label=hectare_squirrel_number)%>%
-  plot_ly(
-    x = ~lat, y = ~long, type = "scatter", mode = "markers",
-    color = ~hectare_squirrel_number, text = ~text_label, alpha = 0.5)
-})
-
-```
-
-### Chart C
-
-```{r}
-
-```
