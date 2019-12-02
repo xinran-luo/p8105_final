@@ -52,8 +52,7 @@ rename(lat=y,
 ```
 
 ```{r}
-sqicon=makeIcon()
-pal=colorNumeric(
+pal=colorBin(
   palette = "viridis",
   domain = squrriel$hectare_squirrel_number)
 
@@ -61,6 +60,7 @@ squrriel%>%
   mutate(
     label=hectare_squirrel_number)%>%
   leaflet()%>%
+  addLegend(pal = pal, values=~hectare_squirrel_number,opacity = 0.5, title = "hectare squirrel number")%>%
   addTiles()%>%
   addProviderTiles(providers$Esri.NatGeoWorldMap)%>% 
   addCircleMarkers(
