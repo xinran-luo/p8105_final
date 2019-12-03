@@ -5,6 +5,7 @@ editor_options:
   chunk_output_type: console
 ---
 
+
 ```{r setup, include=FALSE, message =FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
@@ -371,10 +372,25 @@ is that we were not able to make any inference about change in squirrel’s beha
 our samples were limited and were best represent the squirrel population in Central Park. To our knowledge, there was only 
 one other squirrel census conducted previously in Atlanta, our analysis based on data collected in 2018 provides the most 
 
-up-to-date information on squirrel behaviors and their interactions with the environment, humans, and other predators. We 
+up-to-date information on squirrel behaviors and their interactions with the environment, humans, and other predators. We therefore believe that our attempt to discover factors associated with squirrel distribution or squirrel behaviours still gave some interesting findings. However, to draw a more definitive conclusion, further investigation on significant predictors of squirrel behaviour patterns should be conducted on wider squirrel populations that span wider geographic areas with longer observation period.  
 
-therefore believe that our attempt to discover factors associated with squirrel distribution or squirrel behaviours still gave some interesting findings. However, to draw a more definitive conclusion, further investigation on significant predictors of squirrel behaviour patterns should be conducted on wider squirrel populations that span wider geographic areas with longer observation period.  
 
+
+
+$$ Rate \ of \ Squirrel \ Observed \sim \beta_0 + \beta_1 temperature + \beta_2 litterNone + \beta_3 litterSome + \beta_4 litterAbundant + \beta_5 hectare_conditionsCalm +\beta_6 hectare_conditionsModerate +\beta_7 hectare_conditionsMedium +\beta_8 hectare_conditionsBusy + \varepsilon_i,$$
+```{r}
+hectare_model=hectare%>%
+  mutate(
+    temperature_fahrenheit=as.numeric(temperature_fahrenheit)
+  )
+linearMod <- lm(rate ~ temperature_fahrenheit+litter+hectare_conditions, data=hectare_model)
+
+
+linearMod%>%
+broom::tidy() %>% 
+  select(term, estimate, p.value) %>%
+  knitr::kable(digit=3)
+```
 
 
 

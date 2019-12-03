@@ -4,627 +4,363 @@
 
 <head>
 
-<meta charset="utf-8">
+<meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="xinran" />
+
+
+<title>model</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
 
 <style type="text/css">
-@font-face {
-font-family: octicons-link;
-src: url(data:font/woff;charset=utf-8;base64,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) format('woff');
-}
-body {
--webkit-text-size-adjust: 100%;
-text-size-adjust: 100%;
-color: #333;
-font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-font-size: 16px;
-line-height: 1.6;
-word-wrap: break-word;
-}
-a {
-background-color: transparent;
-}
-a:active,
-a:hover {
-outline: 0;
-}
-strong {
-font-weight: bold;
-}
 h1 {
-font-size: 2em;
-margin: 0.67em 0;
+  font-size: 34px;
 }
-img {
-border: 0;
-}
-hr {
-box-sizing: content-box;
-height: 0;
-}
-pre {
-overflow: auto;
-}
-code,
-kbd,
-pre {
-font-family: monospace, monospace;
-font-size: 1em;
-}
-input {
-color: inherit;
-font: inherit;
-margin: 0;
-}
-html input[disabled] {
-cursor: default;
-}
-input {
-line-height: normal;
-}
-input[type="checkbox"] {
-box-sizing: border-box;
-padding: 0;
-}
-table {
-border-collapse: collapse;
-border-spacing: 0;
-}
-td,
-th {
-padding: 0;
-}
-* {
-box-sizing: border-box;
-}
-input {
-font: 13px / 1.4 Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-}
-a {
-color: #4078c0;
-text-decoration: none;
-}
-a:hover,
-a:active {
-text-decoration: underline;
-}
-hr {
-height: 0;
-margin: 15px 0;
-overflow: hidden;
-background: transparent;
-border: 0;
-border-bottom: 1px solid #ddd;
-}
-hr:before {
-display: table;
-content: "";
-}
-hr:after {
-display: table;
-clear: both;
-content: "";
-}
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-margin-top: 15px;
-margin-bottom: 15px;
-line-height: 1.1;
-}
-h1 {
-font-size: 30px;
+h1.title {
+  font-size: 38px;
 }
 h2 {
-font-size: 21px;
+  font-size: 30px;
 }
 h3 {
-font-size: 16px;
+  font-size: 24px;
 }
 h4 {
-font-size: 14px;
+  font-size: 18px;
 }
 h5 {
-font-size: 12px;
+  font-size: 16px;
 }
 h6 {
-font-size: 11px;
+  font-size: 12px;
 }
-blockquote {
-margin: 0;
+.table th:not([align]) {
+  text-align: left;
 }
-ul,
-ol {
-padding: 0;
-margin-top: 0;
-margin-bottom: 0;
-}
-ol ol,
-ul ol {
-list-style-type: lower-roman;
-}
-ul ul ol,
-ul ol ol,
-ol ul ol,
-ol ol ol {
-list-style-type: lower-alpha;
-}
-dd {
-margin-left: 0;
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
 }
 code {
-font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
-font-size: 12px;
-}
-pre {
-margin-top: 0;
-margin-bottom: 0;
-font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace;
-}
-.select::-ms-expand {
-opacity: 0;
-}
-.octicon {
-font: normal normal normal 16px/1 octicons-link;
-display: inline-block;
-text-decoration: none;
-text-rendering: auto;
--webkit-font-smoothing: antialiased;
--moz-osx-font-smoothing: grayscale;
--webkit-user-select: none;
--moz-user-select: none;
--ms-user-select: none;
-user-select: none;
-}
-.octicon-link:before {
-content: '\f05c';
-}
-.markdown-body:before {
-display: table;
-content: "";
-}
-.markdown-body:after {
-display: table;
-clear: both;
-content: "";
-}
-.markdown-body>*:first-child {
-margin-top: 0 !important;
-}
-.markdown-body>*:last-child {
-margin-bottom: 0 !important;
-}
-a:not([href]) {
-color: inherit;
-text-decoration: none;
-}
-.anchor {
-display: inline-block;
-padding-right: 2px;
-margin-left: -18px;
-}
-.anchor:focus {
-outline: none;
-}
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-margin-top: 1em;
-margin-bottom: 16px;
-font-weight: bold;
-line-height: 1.4;
-}
-h1 .octicon-link,
-h2 .octicon-link,
-h3 .octicon-link,
-h4 .octicon-link,
-h5 .octicon-link,
-h6 .octicon-link {
-color: #000;
-vertical-align: middle;
-visibility: hidden;
-}
-h1:hover .anchor,
-h2:hover .anchor,
-h3:hover .anchor,
-h4:hover .anchor,
-h5:hover .anchor,
-h6:hover .anchor {
-text-decoration: none;
-}
-h1:hover .anchor .octicon-link,
-h2:hover .anchor .octicon-link,
-h3:hover .anchor .octicon-link,
-h4:hover .anchor .octicon-link,
-h5:hover .anchor .octicon-link,
-h6:hover .anchor .octicon-link {
-visibility: visible;
-}
-h1 {
-padding-bottom: 0.3em;
-font-size: 2.25em;
-line-height: 1.2;
-border-bottom: 1px solid #eee;
-}
-h1 .anchor {
-line-height: 1;
-}
-h2 {
-padding-bottom: 0.3em;
-font-size: 1.75em;
-line-height: 1.225;
-border-bottom: 1px solid #eee;
-}
-h2 .anchor {
-line-height: 1;
-}
-h3 {
-font-size: 1.5em;
-line-height: 1.43;
-}
-h3 .anchor {
-line-height: 1.2;
-}
-h4 {
-font-size: 1.25em;
-}
-h4 .anchor {
-line-height: 1.2;
-}
-h5 {
-font-size: 1em;
-}
-h5 .anchor {
-line-height: 1.1;
-}
-h6 {
-font-size: 1em;
-color: #777;
-}
-h6 .anchor {
-line-height: 1.1;
-}
-p,
-blockquote,
-ul,
-ol,
-dl,
-table,
-pre {
-margin-top: 0;
-margin-bottom: 16px;
-}
-hr {
-height: 4px;
-padding: 0;
-margin: 16px 0;
-background-color: #e7e7e7;
-border: 0 none;
-}
-ul,
-ol {
-padding-left: 2em;
-}
-ul ul,
-ul ol,
-ol ol,
-ol ul {
-margin-top: 0;
-margin-bottom: 0;
-}
-li>p {
-margin-top: 16px;
-}
-dl {
-padding: 0;
-}
-dl dt {
-padding: 0;
-margin-top: 16px;
-font-size: 1em;
-font-style: italic;
-font-weight: bold;
-}
-dl dd {
-padding: 0 16px;
-margin-bottom: 16px;
-}
-blockquote {
-padding: 0 15px;
-color: #777;
-border-left: 4px solid #ddd;
-}
-blockquote>:first-child {
-margin-top: 0;
-}
-blockquote>:last-child {
-margin-bottom: 0;
-}
-table {
-display: block;
-width: 100%;
-overflow: auto;
-word-break: normal;
-word-break: keep-all;
-}
-table th {
-font-weight: bold;
-}
-table th,
-table td {
-padding: 6px 13px;
-border: 1px solid #ddd;
-}
-table tr {
-background-color: #fff;
-border-top: 1px solid #ccc;
-}
-table tr:nth-child(2n) {
-background-color: #f8f8f8;
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
 }
 img {
-max-width: 100%;
-box-sizing: content-box;
-background-color: #fff;
+  max-width:100%;
 }
-code {
-padding: 0;
-padding-top: 0.2em;
-padding-bottom: 0.2em;
-margin: 0;
-font-size: 85%;
-background-color: rgba(0,0,0,0.04);
-border-radius: 3px;
+.tabbed-pane {
+  padding-top: 12px;
 }
-code:before,
-code:after {
-letter-spacing: -0.2em;
-content: "\00a0";
+.html-widget {
+  margin-bottom: 20px;
 }
-pre>code {
-padding: 0;
-margin: 0;
-font-size: 100%;
-word-break: normal;
-white-space: pre;
-background: transparent;
-border: 0;
+button.code-folding-btn:focus {
+  outline: none;
 }
-.highlight {
-margin-bottom: 16px;
+summary {
+  display: list-item;
 }
-.highlight pre,
-pre {
-padding: 16px;
-overflow: auto;
-font-size: 85%;
-line-height: 1.45;
-background-color: #f7f7f7;
-border-radius: 3px;
-}
-.highlight pre {
-margin-bottom: 0;
-word-break: normal;
-}
-pre {
-word-wrap: normal;
-}
-pre code {
-display: inline;
-max-width: initial;
-padding: 0;
-margin: 0;
-overflow: initial;
-line-height: inherit;
-word-wrap: normal;
-background-color: transparent;
-border: 0;
-}
-pre code:before,
-pre code:after {
-content: normal;
-}
-kbd {
-display: inline-block;
-padding: 3px 5px;
-font-size: 11px;
-line-height: 10px;
-color: #555;
-vertical-align: middle;
-background-color: #fcfcfc;
-border: solid 1px #ccc;
-border-bottom-color: #bbb;
-border-radius: 3px;
-box-shadow: inset 0 -1px 0 #bbb;
-}
-.pl-c {
-color: #969896;
-}
-.pl-c1,
-.pl-s .pl-v {
-color: #0086b3;
-}
-.pl-e,
-.pl-en {
-color: #795da3;
-}
-.pl-s .pl-s1,
-.pl-smi {
-color: #333;
-}
-.pl-ent {
-color: #63a35c;
-}
-.pl-k {
-color: #a71d5d;
-}
-.pl-pds,
-.pl-s,
-.pl-s .pl-pse .pl-s1,
-.pl-sr,
-.pl-sr .pl-cce,
-.pl-sr .pl-sra,
-.pl-sr .pl-sre {
-color: #183691;
-}
-.pl-v {
-color: #ed6a43;
-}
-.pl-id {
-color: #b52a1d;
-}
-.pl-ii {
-background-color: #b52a1d;
-color: #f8f8f8;
-}
-.pl-sr .pl-cce {
-color: #63a35c;
-font-weight: bold;
-}
-.pl-ml {
-color: #693a17;
-}
-.pl-mh,
-.pl-mh .pl-en,
-.pl-ms {
-color: #1d3e81;
-font-weight: bold;
-}
-.pl-mq {
-color: #008080;
-}
-.pl-mi {
-color: #333;
-font-style: italic;
-}
-.pl-mb {
-color: #333;
-font-weight: bold;
-}
-.pl-md {
-background-color: #ffecec;
-color: #bd2c00;
-}
-.pl-mi1 {
-background-color: #eaffea;
-color: #55a532;
-}
-.pl-mdr {
-color: #795da3;
-font-weight: bold;
-}
-.pl-mo {
-color: #1d3e81;
-}
-kbd {
-display: inline-block;
-padding: 3px 5px;
-font: 11px Consolas, "Liberation Mono", Menlo, Courier, monospace;
-line-height: 10px;
-color: #555;
-vertical-align: middle;
-background-color: #fcfcfc;
-border: solid 1px #ccc;
-border-bottom-color: #bbb;
-border-radius: 3px;
-box-shadow: inset 0 -1px 0 #bbb;
-}
-.task-list-item {
-list-style-type: none;
-}
-.task-list-item+.task-list-item {
-margin-top: 3px;
-}
-.task-list-item input {
-margin: 0 0.35em 0.25em -1.6em;
-vertical-align: middle;
-}
-:checked+.radio-label {
-z-index: 1;
-position: relative;
-border-color: #4078c0;
-}
-.sourceLine {
-display: inline-block;
-}
-code .kw { color: #000000; }
-code .dt { color: #ed6a43; }
-code .dv { color: #009999; }
-code .bn { color: #009999; }
-code .fl { color: #009999; }
-code .ch { color: #009999; }
-code .st { color: #183691; }
-code .co { color: #969896; }
-code .ot { color: #0086b3; }
-code .al { color: #a61717; }
-code .fu { color: #63a35c; }
-code .er { color: #a61717; background-color: #e3d2d2; }
-code .wa { color: #000000; }
-code .cn { color: #008080; }
-code .sc { color: #008080; }
-code .vs { color: #183691; }
-code .ss { color: #183691; }
-code .im { color: #000000; }
-code .va {color: #008080; }
-code .cf { color: #000000; }
-code .op { color: #000000; }
-code .bu { color: #000000; }
-code .ex { color: #000000; }
-code .pp { color: #999999; }
-code .at { color: #008080; }
-code .do { color: #969896; }
-code .an { color: #008080; }
-code .cv { color: #008080; }
-code .in { color: #008080; }
 </style>
-<style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
 body {
-  box-sizing: border-box;
-  min-width: 200px;
-  max-width: 980px;
-  margin: 0 auto;
-  padding: 45px;
-  padding-top: 0px;
+  padding-top: 61px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h2 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h3 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h4 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h5 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h6 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
 }
 </style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
 
 </head>
 
 <body>
 
-<h1 id="model">model</h1>
-<p>xinran 12/2/2019</p>
-<h2 id="importing-data">Importing Data</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">squrriel =<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;./data/2018_Central_Park_Squirrel_Census_-_Squirrel_Data.csv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1-2" title="2">janitor<span class="op">::</span><span class="kw">clean_names</span>()  </a>
-<a class="sourceLine" id="cb1-3" title="3">skimr<span class="op">::</span><span class="kw">skim</span>(squrriel) <span class="co"># observe the distribution of our dataset</span></a></code></pre></div>
-<h2 id="data-cleaning">Data Cleaning</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">squrriel =<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;./data/2018_Central_Park_Squirrel_Census_-_Squirrel_Data.csv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb2-2" title="2">janitor<span class="op">::</span><span class="kw">clean_names</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb2-3" title="3"><span class="kw">mutate</span>(<span class="dt">age_group =</span> <span class="kw">ifelse</span>(age <span class="op">%in%</span><span class="st"> &quot;Adult&quot;</span>,<span class="st">&quot;Adult&quot;</span>,<span class="kw">ifelse</span>(age <span class="op">%in%</span><span class="st"> &quot;Juvenile&quot;</span>,<span class="st">&quot;Juvenile&quot;</span>,<span class="st">&quot;Unknown&quot;</span>)),</a>
-<a class="sourceLine" id="cb2-4" title="4">      <span class="dt">age_group =</span> <span class="kw">fct_relevel</span>(<span class="kw">as.factor</span>(age_group),<span class="kw">c</span>(<span class="st">&quot;Juvenile&quot;</span>,<span class="st">&quot;Adult&quot;</span>,<span class="st">&quot;Unknown&quot;</span>)),</a>
-<a class="sourceLine" id="cb2-5" title="5">      <span class="dt">location =</span> <span class="kw">fct_relevel</span>(<span class="kw">as.factor</span>(location),<span class="kw">c</span>(<span class="st">&quot;Above Ground&quot;</span>,<span class="st">&quot;Ground Plane&quot;</span>)),</a>
-<a class="sourceLine" id="cb2-6" title="6">      <span class="dt">primary_fur_color =</span> <span class="kw">fct_relevel</span>(<span class="kw">as.factor</span>(primary_fur_color),<span class="kw">c</span>(<span class="st">&quot;Cinnamon&quot;</span>,<span class="st">&quot;Gray&quot;</span>,<span class="st">&quot;Black&quot;</span>))) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb2-7" title="7"><span class="kw">separate</span>(date,<span class="dt">into=</span><span class="kw">c</span>(<span class="st">&#39;day&#39;</span>,<span class="st">&#39;year&#39;</span>),<span class="dt">sep=</span><span class="dv">4</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb2-8" title="8"><span class="kw">separate</span>(day,<span class="dt">into =</span> <span class="kw">c</span>(<span class="st">&#39;month&#39;</span>,<span class="st">&#39;Date&#39;</span>), <span class="dt">sep=</span><span class="dv">2</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb2-9" title="9"><span class="kw">mutate</span>(<span class="dt">Day =</span> <span class="kw">recode</span>(Date, <span class="st">&quot;06&quot;</span>=<span class="st">&quot;Day1&quot;</span>, <span class="st">&quot;07&quot;</span>=<span class="st">&quot;Day2&quot;</span>, <span class="st">&quot;08&quot;</span>=<span class="st">&quot;Day3&quot;</span>, <span class="st">&quot;10&quot;</span>=<span class="st">&quot;Day4&quot;</span>, <span class="st">&quot;12&quot;</span>=<span class="st">&quot;Day5&quot;</span>, <span class="st">&quot;13&quot;</span>=<span class="st">&quot;Day6&quot;</span>, <span class="st">&quot;14&quot;</span>=<span class="st">&quot;Day7&quot;</span>, <span class="st">&quot;17&quot;</span>=<span class="st">&quot;Day8&quot;</span>, <span class="st">&quot;18&quot;</span>=<span class="st">&quot;Day9&quot;</span>, <span class="st">&quot;19&quot;</span>=<span class="st">&quot;Day10&quot;</span>, <span class="st">&quot;20&quot;</span>=<span class="st">&quot;Day11&quot;</span>),</a>
-<a class="sourceLine" id="cb2-10" title="10">       <span class="dt">Day =</span> <span class="kw">fct_relevel</span>(Day, <span class="kw">c</span>(<span class="st">&quot;Day1&quot;</span>, <span class="st">&quot;Day2&quot;</span>, <span class="st">&quot;Day3&quot;</span>, <span class="st">&quot;Day4&quot;</span>, <span class="st">&quot;Day5&quot;</span>, <span class="st">&quot;Day6&quot;</span>, <span class="st">&quot;Day7&quot;</span>, <span class="st">&quot;Day8&quot;</span>, <span class="st">&quot;Day9&quot;</span>, <span class="st">&quot;Day10&quot;</span>, <span class="st">&quot;Day11&quot;</span>)))<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb2-11" title="11"><span class="kw">select</span>(<span class="op">-</span>Date,<span class="op">-</span>month, <span class="op">-</span>year)</a></code></pre></div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">hectare_data=<span class="kw">read_csv</span>(<span class="st">&quot;./data/2018_Central_Park_Squirrel_Census_-_Hectare_Data.csv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb3-2" title="2">janitor<span class="op">::</span><span class="kw">clean_names</span>()<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb3-3" title="3"><span class="kw">separate</span>(date,<span class="dt">into=</span><span class="kw">c</span>(<span class="st">&#39;day&#39;</span>,<span class="st">&#39;year&#39;</span>),<span class="dt">sep=</span><span class="dv">4</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb3-4" title="4"><span class="kw">separate</span>(day,<span class="dt">into =</span> <span class="kw">c</span>(<span class="st">&#39;month&#39;</span>,<span class="st">&#39;Date&#39;</span>), <span class="dt">sep=</span><span class="dv">2</span>)<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb3-5" title="5"><span class="kw">mutate</span>(<span class="dt">Day =</span> <span class="kw">recode</span>(Date, <span class="st">&quot;06&quot;</span>=<span class="st">&quot;Day1&quot;</span>, <span class="st">&quot;07&quot;</span>=<span class="st">&quot;Day2&quot;</span>, <span class="st">&quot;08&quot;</span>=<span class="st">&quot;Day3&quot;</span>, <span class="st">&quot;10&quot;</span>=<span class="st">&quot;Day4&quot;</span>, <span class="st">&quot;12&quot;</span>=<span class="st">&quot;Day5&quot;</span>, <span class="st">&quot;13&quot;</span>=<span class="st">&quot;Day6&quot;</span>, <span class="st">&quot;14&quot;</span>=<span class="st">&quot;Day7&quot;</span>, <span class="st">&quot;17&quot;</span>=<span class="st">&quot;Day8&quot;</span>, <span class="st">&quot;18&quot;</span>=<span class="st">&quot;Day9&quot;</span>, <span class="st">&quot;19&quot;</span>=<span class="st">&quot;Day10&quot;</span>, <span class="st">&quot;20&quot;</span>=<span class="st">&quot;Day11&quot;</span>),</a>
-<a class="sourceLine" id="cb3-6" title="6">       <span class="dt">Day =</span> <span class="kw">fct_relevel</span>(Day, <span class="kw">c</span>(<span class="st">&quot;Day1&quot;</span>, <span class="st">&quot;Day2&quot;</span>, <span class="st">&quot;Day3&quot;</span>, <span class="st">&quot;Day4&quot;</span>, <span class="st">&quot;Day5&quot;</span>, <span class="st">&quot;Day6&quot;</span>, <span class="st">&quot;Day7&quot;</span>, <span class="st">&quot;Day8&quot;</span>, <span class="st">&quot;Day9&quot;</span>, <span class="st">&quot;Day10&quot;</span>, <span class="st">&quot;Day11&quot;</span>)))<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb3-7" title="7"><span class="kw">select</span>(<span class="op">-</span>Date,<span class="op">-</span>month, <span class="op">-</span>year)</a></code></pre></div>
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Home</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="video.html">Screencast</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="data.html">Data</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Analysis
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Final_Anran.html">descriptive by anran</a>
+    </li>
+    <li>
+      <a href=".html">descriptive by xuan</a>
+    </li>
+    <li>
+      <a href="https://junyinxixi.shinyapps.io/shiny_2/">Trends over time</a>
+    </li>
+    <li>
+      <a href="https://xinran-hhh.shinyapps.io/shiny_app/">Spatial trends/visualization</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="mailto:&lt;xl2851@cumc.columbia.edu&gt;">
+    <span class="fa fa-envelope fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://github.com/xinran-luo/p8105_final">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">model</h1>
+<h4 class="author">xinran</h4>
+<h4 class="date">12/2/2019</h4>
+
+</div>
+
+
+<div id="importing-data" class="section level2">
+<h2>Importing Data</h2>
+<pre class="r"><code>squrriel = read_csv(&quot;./data/2018_Central_Park_Squirrel_Census_-_Squirrel_Data.csv&quot;) %&gt;% 
+janitor::clean_names()  
+skimr::skim(squrriel) # observe the distribution of our dataset</code></pre>
+</div>
+<div id="data-cleaning" class="section level2">
+<h2>Data Cleaning</h2>
+<pre class="r"><code>squrriel = read_csv(&quot;./data/2018_Central_Park_Squirrel_Census_-_Squirrel_Data.csv&quot;) %&gt;% 
+janitor::clean_names() %&gt;% 
+mutate(age_group = ifelse(age %in% &quot;Adult&quot;,&quot;Adult&quot;,ifelse(age %in% &quot;Juvenile&quot;,&quot;Juvenile&quot;,&quot;Unknown&quot;)),
+      age_group = fct_relevel(as.factor(age_group),c(&quot;Juvenile&quot;,&quot;Adult&quot;,&quot;Unknown&quot;)),
+      location = fct_relevel(as.factor(location),c(&quot;Above Ground&quot;,&quot;Ground Plane&quot;)),
+      primary_fur_color = fct_relevel(as.factor(primary_fur_color),c(&quot;Cinnamon&quot;,&quot;Gray&quot;,&quot;Black&quot;))) %&gt;% 
+separate(date,into=c(&#39;day&#39;,&#39;year&#39;),sep=4) %&gt;% 
+separate(day,into = c(&#39;month&#39;,&#39;Date&#39;), sep=2) %&gt;% 
+mutate(Day = recode(Date, &quot;06&quot;=&quot;Day1&quot;, &quot;07&quot;=&quot;Day2&quot;, &quot;08&quot;=&quot;Day3&quot;, &quot;10&quot;=&quot;Day4&quot;, &quot;12&quot;=&quot;Day5&quot;, &quot;13&quot;=&quot;Day6&quot;, &quot;14&quot;=&quot;Day7&quot;, &quot;17&quot;=&quot;Day8&quot;, &quot;18&quot;=&quot;Day9&quot;, &quot;19&quot;=&quot;Day10&quot;, &quot;20&quot;=&quot;Day11&quot;),
+       Day = fct_relevel(Day, c(&quot;Day1&quot;, &quot;Day2&quot;, &quot;Day3&quot;, &quot;Day4&quot;, &quot;Day5&quot;, &quot;Day6&quot;, &quot;Day7&quot;, &quot;Day8&quot;, &quot;Day9&quot;, &quot;Day10&quot;, &quot;Day11&quot;)))%&gt;%
+select(-Date,-month, -year)</code></pre>
+<pre class="r"><code>hectare_data=read_csv(&quot;./data/2018_Central_Park_Squirrel_Census_-_Hectare_Data.csv&quot;) %&gt;% 
+janitor::clean_names()%&gt;%
+separate(date,into=c(&#39;day&#39;,&#39;year&#39;),sep=4) %&gt;% 
+separate(day,into = c(&#39;month&#39;,&#39;Date&#39;), sep=2)%&gt;%
+mutate(Day = recode(Date, &quot;06&quot;=&quot;Day1&quot;, &quot;07&quot;=&quot;Day2&quot;, &quot;08&quot;=&quot;Day3&quot;, &quot;10&quot;=&quot;Day4&quot;, &quot;12&quot;=&quot;Day5&quot;, &quot;13&quot;=&quot;Day6&quot;, &quot;14&quot;=&quot;Day7&quot;, &quot;17&quot;=&quot;Day8&quot;, &quot;18&quot;=&quot;Day9&quot;, &quot;19&quot;=&quot;Day10&quot;, &quot;20&quot;=&quot;Day11&quot;),
+       Day = fct_relevel(Day, c(&quot;Day1&quot;, &quot;Day2&quot;, &quot;Day3&quot;, &quot;Day4&quot;, &quot;Day5&quot;, &quot;Day6&quot;, &quot;Day7&quot;, &quot;Day8&quot;, &quot;Day9&quot;, &quot;Day10&quot;, &quot;Day11&quot;)),
+       litter = ifelse(is.na(litter) == TRUE, &#39;Unknown&#39;, litter),
+       litter = fct_relevel(as.factor(litter),c(&quot;Unknown&quot;,&quot;None&quot;,&quot;Some&quot;,&quot;Abundant&quot;)),
+       hectare_conditions = ifelse(is.na(hectare_conditions) == TRUE, &#39;Unknown&#39;, hectare_conditions),
+       hectare_conditions = fct_relevel(as.factor(hectare_conditions), c(&quot;Unknown&quot;, &quot;Calm&quot;, &quot;Moderate&quot;, &quot;Medium&quot;,&quot;Busy&quot;)))%&gt;%
+select(-Date,-month, -year)</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   Hectare = col_character(),
@@ -640,114 +376,98 @@ body {
 ##   `Number of sighters` = col_double(),
 ##   `Number of Squirrels` = col_double(),
 ##   `Total Time of Sighting` = col_double()
-## )
-</code></pre>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">numextract &lt;-<span class="st"> </span><span class="cf">function</span>(string){ </a>
-<a class="sourceLine" id="cb5-2" title="2">  <span class="kw">str_extract</span>(string, <span class="st">&quot;</span><span class="ch">\\</span><span class="st">-*</span><span class="ch">\\</span><span class="st">d+</span><span class="ch">\\</span><span class="st">.*</span><span class="ch">\\</span><span class="st">d*&quot;</span>)</a>
-<a class="sourceLine" id="cb5-3" title="3">}</a>
-<a class="sourceLine" id="cb5-4" title="4"></a>
-<a class="sourceLine" id="cb5-5" title="5">hectare_data =<span class="st"> </span></a>
-<a class="sourceLine" id="cb5-6" title="6"><span class="st">  </span>hectare_data <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb5-7" title="7"><span class="st">  </span><span class="kw">mutate</span>(</a>
-<a class="sourceLine" id="cb5-8" title="8">      <span class="dt">temperature =</span> <span class="kw">numextract</span>(sighter_observed_weather_data),</a>
-<a class="sourceLine" id="cb5-9" title="9">      <span class="dt">temperature=</span><span class="kw">as.numeric</span>(temperature)</a>
-<a class="sourceLine" id="cb5-10" title="10">)</a></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">total_data=</a>
-<a class="sourceLine" id="cb6-2" title="2"><span class="st">  </span><span class="kw">left_join</span>(squrriel, hectare_data, <span class="dt">by=</span><span class="kw">c</span>(<span class="st">&quot;hectare&quot;</span>,<span class="st">&quot;Day&quot;</span>,<span class="st">&quot;shift&quot;</span>))</a></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">squ_ac=<span class="kw">multinom</span>(running<span class="op">+</span>chasing<span class="op">+</span>climbing<span class="op">+</span>eating<span class="op">+</span>foraging<span class="op">~</span>age<span class="op">+</span>hectare_conditions<span class="op">+</span>temperature,<span class="dt">data=</span>total_data)</a></code></pre></div>
-<pre><code>## # weights:  54 (40 variable)
-## initial  value 4517.025622 
-## iter  10 value 2515.075170
-## iter  20 value 2439.927606
-## iter  30 value 2427.629136
-## iter  40 value 2427.281240
-## iter  50 value 2427.259790
-## final  value 2427.259491 
-## converged
-</code></pre>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw">coef</span>(squ_ac)<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb9-2" title="2">broom<span class="op">::</span><span class="kw">tidy</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb9-3" title="3"><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>()</a></code></pre></div>
+## )</code></pre>
+<pre class="r"><code>numextract &lt;- function(string){ 
+  str_extract(string, &quot;\\-*\\d+\\.*\\d*&quot;)
+}
+
+hectare_data = 
+  hectare_data %&gt;% 
+  mutate(
+      temperature = numextract(sighter_observed_weather_data),
+      temperature=as.numeric(temperature)
+)</code></pre>
+<pre class="r"><code>total_data=
+  left_join(squrriel, hectare_data, by=c(&quot;hectare&quot;,&quot;Day&quot;,&quot;shift&quot;))%&gt;%
+  mutate(rate = number_of_squirrels/total_time_of_sighting)%&gt;%
+  filter(hectare_conditions!=&quot;Calm, Busy&quot;)</code></pre>
+<p><span class="math display">\[ Rate \ of \ Squirrel \ Observed \sim \beta_0 + \beta_1 temperature + \beta_2 litterNone + \beta_3 litterSome + \beta_4 litterAbundant + \beta_5 hectare_conditionsCalm +\beta_6 hectare_conditionsModerate +\beta_5 hectare_conditionsMedium +\beta_5 hectare_conditionsBusy + \varepsilon_i,\]</span></p>
+<pre class="r"><code>linearMod &lt;- lm(rate ~ temperature+litter+hectare_conditions, data=total_data)
+
+
+linearMod%&gt;%
+broom::tidy() %&gt;% 
+  select(term, estimate, p.value) %&gt;%
+  knitr::kable(digit=3)</code></pre>
 <table>
 <thead>
 <tr class="header">
-<th align="right">X.Intercept.</th>
-<th align="right">ageAdult</th>
-<th align="right">ageJuvenile</th>
-<th align="right">hectare_conditionsCalm</th>
-<th align="right">hectare_conditionsCalm..Busy</th>
-<th align="right">hectare_conditionsMedium</th>
-<th align="right">hectare_conditionsModerate</th>
-<th align="right">temperature</th>
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">p.value</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="right">-0.5278835</td>
-<td align="right">3.219794</td>
-<td align="right">3.085625</td>
-<td align="right">0.1862248</td>
-<td align="right">-0.6486090</td>
-<td align="right">12.1890130</td>
-<td align="right">0.9132907</td>
-<td align="right">-0.0055893</td>
+<td align="left">(Intercept)</td>
+<td align="right">0.070</td>
+<td align="right">0.009</td>
 </tr>
 <tr class="even">
-<td align="right">-19.8588545</td>
-<td align="right">21.581122</td>
-<td align="right">21.316471</td>
-<td align="right">-0.0846792</td>
-<td align="right">-0.7935160</td>
-<td align="right">11.7573479</td>
-<td align="right">1.0300399</td>
-<td align="right">-0.0045812</td>
+<td align="left">temperature</td>
+<td align="right">0.003</td>
+<td align="right">0.000</td>
 </tr>
 <tr class="odd">
-<td align="right">-17.9111586</td>
-<td align="right">18.324623</td>
-<td align="right">18.200866</td>
-<td align="right">0.1798581</td>
-<td align="right">-0.1345721</td>
-<td align="right">-6.9447564</td>
-<td align="right">0.9470001</td>
-<td align="right">-0.0096437</td>
+<td align="left">litterNone</td>
+<td align="right">-0.015</td>
+<td align="right">0.162</td>
 </tr>
 <tr class="even">
-<td align="right">-13.2397482</td>
-<td align="right">10.338495</td>
-<td align="right">10.968140</td>
-<td align="right">0.0030361</td>
-<td align="right">-20.1587805</td>
-<td align="right">-1.2521748</td>
-<td align="right">-22.1074282</td>
-<td align="right">0.0030758</td>
+<td align="left">litterSome</td>
+<td align="right">-0.005</td>
+<td align="right">0.624</td>
 </tr>
 <tr class="odd">
-<td align="right">-12.5027421</td>
-<td align="right">7.739876</td>
-<td align="right">-9.270774</td>
-<td align="right">-20.1499151</td>
-<td align="right">-9.6006091</td>
-<td align="right">0.6574015</td>
-<td align="right">-12.1499769</td>
-<td align="right">0.0182334</td>
+<td align="left">litterAbundant</td>
+<td align="right">-0.050</td>
+<td align="right">0.008</td>
+</tr>
+<tr class="even">
+<td align="left">hectare_conditionsCalm</td>
+<td align="right">0.050</td>
+<td align="right">0.007</td>
+</tr>
+<tr class="odd">
+<td align="left">hectare_conditionsModerate</td>
+<td align="right">0.068</td>
+<td align="right">0.004</td>
+</tr>
+<tr class="even">
+<td align="left">hectare_conditionsMedium</td>
+<td align="right">0.032</td>
+<td align="right">0.672</td>
+</tr>
+<tr class="odd">
+<td align="left">hectare_conditionsBusy</td>
+<td align="right">0.039</td>
+<td align="right">0.033</td>
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">interact=<span class="kw">multinom</span>(kuks<span class="op">+</span>quaas<span class="op">+</span>tail_flags<span class="op">+</span>tail_twitches<span class="op">+</span>approaches<span class="op">+</span>indifferent<span class="op">+</span>runs_from<span class="op">~</span>age<span class="op">+</span>litter<span class="op">+</span>temperature,<span class="dt">data=</span>total_data)</a></code></pre></div>
-<pre><code>## # weights:  42 (30 variable)
-## initial  value 4174.799563 
-## iter  10 value 2568.849171
-## iter  20 value 2420.221530
-## iter  30 value 2406.997818
-## iter  40 value 2406.481420
-## iter  50 value 2406.458578
-## final  value 2406.457732 
-## converged
-</code></pre>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw">coef</span>(interact)<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb12-2" title="2">broom<span class="op">::</span><span class="kw">tidy</span>()<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb12-3" title="3"><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>()</a></code></pre></div>
+<pre class="r"><code>squ_ac=multinom(running+chasing+climbing+eating+foraging~age+litter+temperature,data=total_data)</code></pre>
+<pre><code>## # weights:  48 (35 variable)
+## initial  value 4561.819609 
+## iter  10 value 2538.021960
+## iter  20 value 2464.828409
+## iter  30 value 2448.952863
+## iter  40 value 2448.159462
+## iter  50 value 2448.115149
+## final  value 2448.114595 
+## converged</code></pre>
+<pre class="r"><code>coef(squ_ac)%&gt;%
+broom::tidy() %&gt;% 
+  knitr::kable()</code></pre>
 <table>
 <thead>
 <tr class="header">
@@ -756,52 +476,178 @@ body {
 <th align="right">ageJuvenile</th>
 <th align="right">litterNone</th>
 <th align="right">litterSome</th>
+<th align="right">litterAbundant</th>
 <th align="right">temperature</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="right">0.3563525</td>
-<td align="right">1.897844</td>
-<td align="right">1.61190</td>
-<td align="right">-0.5138135</td>
-<td align="right">-0.2075143</td>
-<td align="right">-0.0124009</td>
+<td align="right">-0.4642071</td>
+<td align="right">3.284957</td>
+<td align="right">3.070891</td>
+<td align="right">0.1792754</td>
+<td align="right">0.0860271</td>
+<td align="right">-0.2026931</td>
+<td align="right">-0.0072843</td>
 </tr>
 <tr class="even">
-<td align="right">-32.0653982</td>
-<td align="right">33.348215</td>
-<td align="right">33.50419</td>
-<td align="right">-0.1526341</td>
-<td align="right">-0.1058666</td>
-<td align="right">-0.0202789</td>
+<td align="right">-21.0678134</td>
+<td align="right">22.670244</td>
+<td align="right">22.387631</td>
+<td align="right">0.1522354</td>
+<td align="right">-0.0162294</td>
+<td align="right">0.0021768</td>
+<td align="right">-0.0033410</td>
 </tr>
 <tr class="odd">
-<td align="right">-22.3227625</td>
-<td align="right">22.645822</td>
-<td align="right">22.21704</td>
-<td align="right">-0.3599412</td>
-<td align="right">-0.6589934</td>
-<td align="right">-0.0319366</td>
+<td align="right">-20.0115716</td>
+<td align="right">20.100098</td>
+<td align="right">19.809155</td>
+<td align="right">0.8044257</td>
+<td align="right">0.3770952</td>
+<td align="right">-0.0018531</td>
+<td align="right">-0.0104473</td>
 </tr>
 <tr class="even">
-<td align="right">-43.5726687</td>
-<td align="right">22.903566</td>
-<td align="right">-48.76849</td>
-<td align="right">19.5312520</td>
-<td align="right">18.3260709</td>
-<td align="right">-0.0471355</td>
+<td align="right">-12.3472226</td>
+<td align="right">9.657304</td>
+<td align="right">10.095762</td>
+<td align="right">-1.1286473</td>
+<td align="right">0.0897362</td>
+<td align="right">-24.4601788</td>
+<td align="right">0.0070479</td>
 </tr>
 <tr class="odd">
-<td align="right">-28.9740889</td>
-<td align="right">5.969466</td>
-<td align="right">-12.67024</td>
-<td align="right">19.0409756</td>
-<td align="right">-20.0029491</td>
-<td align="right">-0.0216528</td>
+<td align="right">-27.2393956</td>
+<td align="right">7.242790</td>
+<td align="right">-11.373519</td>
+<td align="right">-6.6168958</td>
+<td align="right">13.5148767</td>
+<td align="right">-2.7694841</td>
+<td align="right">0.0485614</td>
 </tr>
 </tbody>
 </table>
+<pre class="r"><code>interact=multinom(kuks+quaas+tail_flags+tail_twitches+approaches+indifferent+runs_from~age+litter+temperature,data=total_data)</code></pre>
+<pre><code>## # weights:  48 (35 variable)
+## initial  value 4561.819609 
+## iter  10 value 2761.384148
+## iter  20 value 2608.810735
+## iter  30 value 2584.904139
+## iter  40 value 2583.443108
+## iter  50 value 2583.372155
+## iter  60 value 2583.366659
+## final  value 2583.366370 
+## converged</code></pre>
+<pre class="r"><code>coef(interact)%&gt;%
+broom::tidy()%&gt;%
+  knitr::kable()</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="right">X.Intercept.</th>
+<th align="right">ageAdult</th>
+<th align="right">ageJuvenile</th>
+<th align="right">litterNone</th>
+<th align="right">litterSome</th>
+<th align="right">litterAbundant</th>
+<th align="right">temperature</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">-0.2727676</td>
+<td align="right">1.965263</td>
+<td align="right">1.650894</td>
+<td align="right">0.1396143</td>
+<td align="right">0.3968358</td>
+<td align="right">0.5731579</td>
+<td align="right">-0.0125398</td>
+</tr>
+<tr class="even">
+<td align="right">-27.5639593</td>
+<td align="right">28.531611</td>
+<td align="right">28.651778</td>
+<td align="right">0.5584235</td>
+<td align="right">0.5434461</td>
+<td align="right">0.6092474</td>
+<td align="right">-0.0251863</td>
+</tr>
+<tr class="odd">
+<td align="right">-27.7816017</td>
+<td align="right">25.678917</td>
+<td align="right">25.247736</td>
+<td align="right">2.3444370</td>
+<td align="right">1.9979993</td>
+<td align="right">2.6105009</td>
+<td align="right">-0.0350593</td>
+</tr>
+<tr class="even">
+<td align="right">-42.5164785</td>
+<td align="right">9.632931</td>
+<td align="right">-29.773849</td>
+<td align="right">31.8145255</td>
+<td align="right">30.8328665</td>
+<td align="right">-16.2001987</td>
+<td align="right">-0.0512910</td>
+</tr>
+<tr class="odd">
+<td align="right">-32.7943791</td>
+<td align="right">6.213693</td>
+<td align="right">-13.533257</td>
+<td align="right">22.9111842</td>
+<td align="right">-7.9672202</td>
+<td align="right">-6.9041093</td>
+<td align="right">-0.0244807</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 
 </body>
 </html>
