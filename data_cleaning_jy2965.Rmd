@@ -2,7 +2,7 @@
 title: "data clean_jy2965"
 author: "Jun Yin"
 date: "11/22/2019"
-output: github_document
+output: html_document
 ---
 
 ```{r setup, include=FALSE}
