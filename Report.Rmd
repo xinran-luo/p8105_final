@@ -35,64 +35,27 @@ scale_fill_discrete = scale_fill_viridis_d
 theme_set(theme_minimal() + theme(legend.position = "bottom"))
 ```
 
-
 # Motivation
 
-Squirrels have always served as a needed source of entertainment in Central Park. Other rodents' population has been
-
-well traced and documented, but not always squirrels. However, the necessity of mapping the total population
-
-of squirrels in Central Park is observed as it depicts this community's size and growth, which is highly related to the
-
-evaluation of this community's functioning as a source of entertainment, as well as their potential of harboring and 
-
-delivering pathogens to humans.
-
-In this project, we use [The Squirrel Census data](https://data.cityofnewyork.us/Environment/2018-Central-Park-Squirrel-Census-Squirrel-Data/vfnx-vebw) from NYC Open Data host, which focuses on Eastern gray species
-
-specifically. For this project, we aim at depicting a full picture of the current squirrels community in Central Park, 
-
-with regards to their demographics statistics as well as their living status. We also intend to assess their performance 
-
-and activity of Squirrels in Central Park, by evaluating their interactions with humans.
+Squirrels have always served as a needed source of entertainment in Central Park. Other rodents' population has been well traced and documented, but not always squirrels. However, the necessity of mapping the total population of squirrels in Central Park is observed as it depicts this community's size and growth, which is highly related to the evaluation of this community's functioning as a source of entertainment, as well as their potential of harboring and delivering pathogens to humans.
 
 
-We believe this project can provide evidence-based information for the Central Park Squirrel community, as well as 
+In this project, we use [The Squirrel Census data](https://data.cityofnewyork.us/Environment/2018-Central-Park-Squirrel-Census-Squirrel-Data/vfnx-vebw) from NYC Open Data host, which focuses on Eastern gray species specifically. For this project, we aim at depicting a full picture of the current squirrels community in Central Park, with regards to their demographics statistics as well as their living status. We also intend to assess their performance and activity of Squirrels in Central Park, by evaluating their interactions with 
+humans.
 
-contribute to better evaluation and regulation of the Squirrel population in Central Park. This project also has the 
-
-potential in providing further management insights for the planning and designing aspect of the Central Park.
+We believe this project can provide evidence-based information for the Central Park Squirrel community, as well as contribute to better evaluation and regulation of the Squirrel population in Central Park. This project also has the potential in providing further management insights for the planning and designing aspect of the Central Park.
 
 
 # Related Work
 
+A recent news article published on The New York Times sheds some light on the motivation behind the two-week long Central Park Squirrel Census. Despite the ubiquity of the Eastern gray, not much was known about it that we, as humans, should have figured out from a while ago. The value of such census was not just to delineate a specific behaviour pattern of the Eastern gray, but to draw a big picture of the squirrels, the park, and us. We were inspired by the behind-scene motivation of such study and aimed to create this website that has interactive features to learn more about the distribution of the squirrel population and factors that may affect their behaviour patterns. 
 
-A recent news article published on The New York Times sheds some light on the motivation behind the two-week long Central
-
-Park Squirrel Census. Despite the ubiquity of the Eastern gray, not much was known about it that we, as humans, should 
-
-have figured out from a while ago. The value of such census was not just to delineate a specific behaviour pattern of the 
-
-Eastern gray, but to draw a big picture of the squirrels, the park, and us. We were inspired by the behind-scene 
-
-motivation of such study and aimed to create this website that has interactive features to learn more about the 
-
-distribution of the squirrel population and factors that may affect their behaviour patterns. 
-
-
-We believe such interactive visualization allows squirrel-lovers to pick a place to better spot the squirrels and to allow 
-Central Park’ management team to build a better environment for the squirrel community. 
+We believe such interactive visualization allows squirrel-lovers to pick a place to better spot the squirrels and to allow Central Park’ management team to build a better environment for the squirrel community. 
 
 
 # Initial Questions
 
-In this project, we aimed to examine factors associated with the distribution of the squirrel population in Central Park
-
-as well as factors that may be important in predicting certain squirrel behaviours and squirrel-human/predator 
-
-interactions. Our last aim was to predict and visualize different behaviour pattern of the squirrels. We therefore 
-
-proposed the following research questions: 
+In this project, we aimed to examine factors associated with the distribution of the squirrel population in Central Park as well as factors that may be important in predicting certain squirrel behaviours and squirrel-human/predator interactions. Our last aim was to predict and visualize different behaviour pattern of the squirrels. We therefore proposed the following research questions: 
 
 * How does squirrel fur color change throughout different hectares in Central park?
 
@@ -105,17 +68,10 @@ proposed the following research questions:
 
 1. [2018 Central Park Squirrel Census - Squirrel data](https://data.cityofnewyork.us/Environment/2018-Central-Park-Squirrel-Census-Squirrel-Data/vfnx-vebw)contains 
 
-3023 squirrels' information,  including location coordinates, age, primary and secondary fur color, elevation, 
-
-activities, communications, 
-
-and interactions between squirrels and their predators or humans.
+3023 squirrels' information,  including location coordinates, age, primary and secondary fur color, elevation, activities, communications, and interactions between squirrels and their predators or humans.
 
 2. [2018 Central Park Squirrel Census - Hectare Data](https://data.cityofnewyork.us/Environment/2018-Central-Park-Squirrel-Census-Hectare-Data/ej9h-v6g2)
-
-contains environmental data for the 350 “countable” hectares in Central Park, including temperature, litter, noise, 
-
-animals besides of squirrels sighted, and human density.
+contains environmental data for the 350 “countable” hectares in Central Park, including temperature, litter, noise, animals besides of squirrels sighted, and human density.
 
 
 # Exploratory analysis
@@ -127,12 +83,19 @@ We downloaded the data from the web and called it `hectare`.
 ```{r, echo= FALSE, message=FALSE}
 hectare = read_csv("./data/2018_Central_Park_Squirrel_Census_-_Hectare_Data.csv") %>% 
 janitor::clean_names()
+squrriel = read_csv("./data/2018_Central_Park_Squirrel_Census_-_Squirrel_Data.csv") %>% 
+janitor::clean_names()
 ```
 
 
-### Tidy the Dataset 
+### Explore the Dataset 
 
-We created following new variables: 
+The two dataset includes totally 3025 squirrels and 350 hectares in Central Park respectively. Volunteer sighters 
+observed for 11 days from 10/7/2018-10/19/2018. 
+
+
+
+For easier analysis on the two datasets, we created following new variables: 
 
 `temperature_fehrenheit` : temperatures for different time during a day. 
 
@@ -143,7 +106,6 @@ We created following new variables:
 `noninteraction`: total squirrels'activity count for running, chasing, climbing, eating and foraging.
 
 `interaction` : total activity count for interaction between squirrels and predators or human, including
-
 kukking, quaaing, tail flags, tail twitching, being indifferent and running away. 
 
 
@@ -169,6 +131,7 @@ separate(date,into=c('day','year'),sep=4) %>%
 separate(day,into = c('month','Date'), sep=2) %>% 
 mutate(Day = recode(Date, "06"="Day1", "07"="Day2", "08"="Day3", "10"="Day4", "12"="Day5", "13"="Day6", "14"="Day7", "17"="Day8", "18"="Day9", "19"="Day10", "20"="Day11"),
        Day = fct_relevel(Day, c("Day1", "Day2", "Day3", "Day4", "Day5", "Day6", "Day7", "Day8", "Day9", "Day10", "Day11")))
+
 ```
 
 ### Figures
@@ -199,11 +162,7 @@ temperature_df
 
 ```
 
-During the study period (10/7/2018-10/19/2018), the temperatures' range is between 50 and 70 degrees Fahrenheit.Below 50 
-
-degrees Fahrenheit, the number of squirrels observed drastically declined. Above 50, the 
-
-change on rate of squirrel observed is not significant. 
+During the study period (10/7/2018-10/19/2018), the temperatures' range is between 50 and 70 degrees Fahrenheit.Below 50 degrees Fahrenheit, the number of squirrels observed drastically declined. Above 50, the change on rate of squirrel observed is not significant. 
 
 
 #### Bubble plot for rate of squirrel observed 
@@ -264,20 +223,14 @@ plot
 ```
 
 
-The amount of litter and noise levels in the environment did not affect squirrel distribution much; however, when there 
+The amount of litter and noise levels in the environment did not affect squirrel distribution much; however, when there was an abundant amount of litters and high level of noise in the environment, the number of squirrels at the lowest.   
 
-was an abundant amount of litters and high level of noise in the environment, the number of squirrels at the lowest.   
-
-This partially aligns with our expectations that squirrels stay away from the crowds and occupied areas but why other 
-
-levels of litter and noise did not affect the number of squirrels as much worths further investigation.  
+This partially aligns with our expectations that squirrels stay away from the crowds and occupied areas but why other levels of litter and noise did not affect the number of squirrels as much worths further investigation.  
 
 
 #### Line Graph for Each Activity Counts
 
-This graph indicates the total activity frequency for juvenile and adult squirrels during study period. The activity 
-
-includes non-interative and interative with predators or human. 
+This graph indicates the total activity frequency for juvenile and adult squirrels during study period. The activity includes non-interative and interative with predators or human. 
 
 ```{r, echo = FALSE}
 squrriel %>% 
@@ -319,7 +272,7 @@ Generally, the activity frequency is significantly higher among adult squirrels 
 
 #### Bar Graph for Comparison Between Interative and Non-interative Activity Counts
 
-  This graphs show the frequency of squirrel's non-interative and interative activities with predactors  or human in the park.
+This graphs show the frequency of squirrel's non-interative and interative activities with predactors  or human in the park.
 
 
 ```{r, echo = FALSE}
@@ -348,12 +301,9 @@ mutate(noninteraction = running + chasing + climbing + eating + foraging,
          yaxis = list(title = ""),
          margin = list(b = 200),
          barmode = 'group')
-
 ```
 
-Overall, non-interative activity counts were higher than interactive activity counts for the whole study period. There 
-
-was an obvious decreasing trend on both activity counts during the last few days. 
+Overall, non-interative activity counts were higher than interactive activity counts for the whole study period.There was an obvious decreasing trend on both activity counts during the last few days. 
 
 ### Model
 
@@ -379,23 +329,10 @@ broom::tidy() %>%
 
 ### Finding
 
-It is also interesting to see how various factors including temperature, park condition, influence both squirrel’s own 
+It is also interesting to see how various factors including temperature, park condition, influence both squirrel’s own behaviours as well as their interactions with the external environment (including humans and potential predators). 
 
-behaviours as well as their interactions with the external environment (including humans and potential predators). 
-
-A few limitations of this dataset worth mentioning here. The overall sample size was small making stratified analysis 
-
-difficult. We therefore did not perform analysis on specific squirrel activity and could not comment on how the predictors 
-of interest (temperature, condition,  ) here will independently affect each activity of interest. In addition, all data 
-
-was only collected for 11 days over a period of two consecutive weeks and the temperatures did not vary as much making our 
-conclusion on the association between temperature and squirrel distribution less convincing. A followup problem from this 
-
-is that we were not able to make any inference about change in squirrel’s behaviours based on several predictors tested as 
-our samples were limited and were best represent the squirrel population in Central Park. To our knowledge, there was only 
-one other squirrel census conducted previously in Atlanta, our analysis based on data collected in 2018 provides the most 
-
-up-to-date information on squirrel behaviors and their interactions with the environment, humans, and other predators. We therefore believe that our attempt to discover factors associated with squirrel distribution or squirrel behaviours still gave some interesting findings. However, to draw a more definitive conclusion, further investigation on significant predictors of squirrel behaviour patterns should be conducted on wider squirrel populations that span wider geographic areas with longer observation period.  
+A few limitations of this dataset worth mentioning here. The overall sample size was small making stratified analysis difficult. We therefore did not perform analysis on specific squirrel activity and could not comment on how the predictors of interest (temperature, condition,  ) here will independently affect each activity of interest. In addition, all data was only collected for 11 days over a period of two consecutive weeks and the temperatures did not vary as much making our conclusion on the association between temperature and squirrel distribution less convincing. A followup problem from this is that we were not able to make any inference about change in squirrel’s behaviours based on several predictors tested as 
+our samples were limited and were best represent the squirrel population in Central Park. To our knowledge, there was only one other squirrel census conducted previously in Atlanta, our analysis based on data collected in 2018 provides the most up-to-date information on squirrel behaviors and their interactions with the environment, humans, and other predators. We therefore believe that our attempt to discover factors associated with squirrel distribution or squirrel behaviours still gave some interesting findings. However, to draw a more definitive conclusion, further investigation on significant predictors of squirrel behaviour patterns should be conducted on wider squirrel populations that span wider geographic areas with longer observation period.  
 
 
 
