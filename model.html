@@ -282,6 +282,9 @@ $(document).ready(function () {
         <li>
   <a href="data.html">Data</a>
 </li>
+<li>
+  <a href="Report.html">Report</a>
+</li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     Analysis
@@ -290,13 +293,7 @@ $(document).ready(function () {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="Final_Anran.html">descriptive by anran</a>
-    </li>
-    <li>
-      <a href=".html">descriptive by xuan</a>
-    </li>
-    <li>
-      <a href="https://junyinxixi.shinyapps.io/shiny_2/">Trends over time</a>
+      <a href="https://junyinxixi.shinyapps.io/shiny_2">Trends over time</a>
     </li>
     <li>
       <a href="https://xinran-hhh.shinyapps.io/shiny_app/">Spatial trends/visualization</a>
@@ -391,7 +388,7 @@ hectare_data =
   left_join(squrriel, hectare_data, by=c(&quot;hectare&quot;,&quot;Day&quot;,&quot;shift&quot;))%&gt;%
   mutate(rate = number_of_squirrels/total_time_of_sighting)%&gt;%
   filter(hectare_conditions!=&quot;Calm, Busy&quot;)</code></pre>
-<p><span class="math display">\[ Rate \ of \ Squirrel \ Observed \sim \beta_0 + \beta_1 temperature + \beta_2 litterNone + \beta_3 litterSome + \beta_4 litterAbundant + \beta_5 hectare_conditionsCalm +\beta_6 hectare_conditionsModerate +\beta_5 hectare_conditionsMedium +\beta_5 hectare_conditionsBusy + \varepsilon_i,\]</span></p>
+<p><span class="math display">\[ Rate \ of \ Squirrel \ Observed \sim \beta_0 + \beta_1 temperature + \beta_2 litterNone + \beta_3 litterSome + \beta_4 litterAbundant + \beta_5 hectare_conditionsCalm +\beta_6 hectare_conditionsModerate +\beta_7 hectare_conditionsMedium +\beta_8 hectare_conditionsBusy + \varepsilon_i,\]</span></p>
 <pre class="r"><code>linearMod &lt;- lm(rate ~ temperature+litter+hectare_conditions, data=total_data)
 
 
@@ -466,12 +463,11 @@ broom::tidy() %&gt;%
 ## final  value 2448.114595 
 ## converged</code></pre>
 <pre class="r"><code>coef(squ_ac)%&gt;%
-broom::tidy() %&gt;% 
   knitr::kable()</code></pre>
 <table>
 <thead>
 <tr class="header">
-<th align="right">X.Intercept.</th>
+<th align="right">(Intercept)</th>
 <th align="right">ageAdult</th>
 <th align="right">ageJuvenile</th>
 <th align="right">litterNone</th>
@@ -574,7 +570,7 @@ broom::tidy()%&gt;%
 <td align="right">-0.0251863</td>
 </tr>
 <tr class="odd">
-<td align="right">-27.7816017</td>
+<td align="right">-27.7816016</td>
 <td align="right">25.678917</td>
 <td align="right">25.247736</td>
 <td align="right">2.3444370</td>
@@ -587,7 +583,7 @@ broom::tidy()%&gt;%
 <td align="right">9.632931</td>
 <td align="right">-29.773849</td>
 <td align="right">31.8145255</td>
-<td align="right">30.8328665</td>
+<td align="right">30.8328664</td>
 <td align="right">-16.2001987</td>
 <td align="right">-0.0512910</td>
 </tr>
