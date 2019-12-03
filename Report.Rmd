@@ -1,8 +1,9 @@
 ---
 title: "The Squirrel Project"
-output: html_document
-editor_options: 
-  chunk_output_type: console
+output: 
+  html_document:
+  toc:true 
+  toc_float:true  
 ---
 
 
@@ -34,11 +35,11 @@ theme_set(theme_minimal() + theme(legend.position = "bottom"))
 ```
 
 
-## *Motivation*
+## Motivation
 
 Squirrels have always served as a needed source of entertainment in Central Park. Other rodents' population has been
 
-well traced and documented by humans, but not always Squirrels. However, the necessity of mapping the total population
+well traced and documented, but not always squirrels. However, the necessity of mapping the total population
 
 of squirrels in Central Park is observed as it depicts this community's size and growth, which is highly related to the
 
@@ -46,7 +47,7 @@ evaluation of this community's functioning as a source of entertainment, as well
 
 delivering pathogens to humans.
 
-In this project, we use The Squirrel Census data from NYC Open Data host, which focuses on Eastern gray species
+In this project, we use [The Squirrel Census data](https://data.cityofnewyork.us/Environment/2018-Central-Park-Squirrel-Census-Squirrel-Data/vfnx-vebw) from NYC Open Data host, which focuses on Eastern gray species
 
 specifically. For this project, we aim at depicting a full picture of the current squirrels community in Central Park, 
 
@@ -99,23 +100,24 @@ proposed the following research questions:
 * How can we predict and visualize squirrel’s behaviour and/or their interaction with humans/predators based on ambient environment and temperature?
 
 
-## *Data*
+## Data
 
-1. 2018 Central Park Squirrel Census - Squirrel Data:
-(https://data.cityofnewyork.us/Environment/2018-Central-Park-Squirrel-Census-Squirrel-Data/vfnx-vebw)
+1. [2018 Central Park Squirrel Census - Squirrel data](https://data.cityofnewyork.us/Environment/2018-Central-Park-Squirrel-Census-Squirrel-Data/vfnx-vebw)contains 
 
-  This table contains squirrel data for each of the 3,023 sightings, including location coordinates, age, primary and
+3023 squirrels' information,  including location coordinates, age, primary and secondary fur color, elevation, 
 
-  secondary fur color, elevation, activities, communications, and interactions between squirrels and with humans.
+activities, communications, 
 
-2. 2018 Central Park Squirrel Census - Hectare Data:
-(https://data.cityofnewyork.us/Environment/2018-Central-Park-Squirrel-Census-Hectare-Data/ej9h-v6g2)
+and interactions between squirrels and their predators or humans.
 
-This table contains environmental data related to each of the 350 “countable” hectares of Central Park. Examples include 
+2. [2018 Central Park Squirrel Census - Hectare Data](https://data.cityofnewyork.us/Environment/2018-Central-Park-Squirrel-Census-Hectare-Data/ej9h-v6g2)
 
-weather, litter, animals sighted, and human density.
+contains environmental data for the 350 “countable” hectares in Central Park, including temperature, litter, noise, 
 
-# *Exploratory analysis*
+animals besides of squirrels sighted, and human density.
+
+
+# Exploratory analysis
 
 ## Load in Dataset
 
@@ -389,7 +391,6 @@ hectare_model =
     temperature_fahrenheit = as.numeric(temperature_fahrenheit)
   )
 linearMod <- lm(rate ~ temperature_fahrenheit+litter+hectare_conditions, data = hectare_model)
-
 
 linearMod %>%
 broom::tidy() %>% 
