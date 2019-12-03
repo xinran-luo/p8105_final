@@ -1,8 +1,382 @@
 ---
-title: "Report"
+title: "The Squirrel Project"
 output: html_document
+editor_options: 
+  chunk_output_type: console
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include=FALSE, message =FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(rvest)
+library(plotly)
+library(ggplot2)
+library(ggpubr)
+
+knitr::opts_chunk$set(
+  echo = TRUE,
+  warning = FALSE,
+  fig.width = 8,
+  fig.height = 6,
+  out.width = "90%"
+)
+
+options(
+  ggplot2.continuous.colour = "viridis",
+  ggplot2.continuous.fill = "viridis"
+)
+
+scale_colour_discrete = scale_colour_viridis_d
+scale_fill_discrete = scale_fill_viridis_d
+
+theme_set(theme_minimal() + theme(legend.position = "bottom"))
 ```
+
+
+## *Motivation*
+
+Squirrels have always served as a needed source of entertainment in Central Park. Other rodents' population has been
+
+well traced and documented by humans, but not always Squirrels. However, the necessity of mapping the total population
+
+of squirrels in Central Park is observed as it depicts this community's size and growth, which is highly related to the
+
+evaluation of this community's functioning as a source of entertainment, as well as their potential of harboring and 
+
+delivering pathogens to humans.
+
+In this project, we use The Squirrel Census data from NYC Open Data host, which focuses on Eastern gray species
+
+specifically. For this project, we aim at depicting a full picture of the current squirrels community in Central Park, 
+
+with regards to their demographics statistics as well as their living status. We also intend to assess their performance 
+
+and activity of Squirrels in Central Park, by evaluating their interactions with humans.
+
+
+We believe this project can provide evidence-based information for the Central Park Squirrel community, as well as 
+
+contribute to better evaluation and regulation of the Squirrel population in Central Park. This project also has the 
+
+potential in providing further management insights for the planning and designing aspect of the Central Park.
+
+
+## *Related Work*
+
+
+A recent news article published on The New York Times sheds some light on the motivation behind the two-week long Central
+
+Park Squirrel Census. Despite the ubiquity of the Eastern gray, not much was known about it that we, as humans, should 
+
+have figured out from a while ago. The value of such census was not just to delineate a specific behaviour pattern of the 
+
+Eastern gray, but to draw a big picture of the squirrels, the park, and us. We were inspired by the behind-scene 
+
+motivation of such study and aimed to create this website that has interactive features to learn more about the 
+
+distribution of the squirrel population and factors that may affect their behaviour patterns. 
+
+
+We believe such interactive visualization allows squirrel-lovers to pick a place to better spot the squirrels and to allow 
+Central Park’ management team to build a better environment for the squirrel community. 
+
+
+## *Initial Questions*
+
+In this project, we aimed to examine factors associated with the distribution of the squirrel population in Central Park
+
+as well as factors that may be important in predicting certain squirrel behaviours and squirrel-human/predator 
+
+interactions. Our last aim was to predict and visualize different behaviour pattern of the squirrels. We therefore 
+
+proposed the following research questions: 
+
+* How does squirrel fur color change throughout different hectares in Central park?
+
+* What factors affect squirrel distribution in Central Park? If any association exists, how can we visualize it? 
+
+* How can we predict and visualize squirrel’s behaviour and/or their interaction with humans/predators based on ambient environment and temperature?
+
+
+## *Data*
+
+1. 2018 Central Park Squirrel Census - Squirrel Data:
+(https://data.cityofnewyork.us/Environment/2018-Central-Park-Squirrel-Census-Squirrel-Data/vfnx-vebw)
+
+  This table contains squirrel data for each of the 3,023 sightings, including location coordinates, age, primary and
+
+  secondary fur color, elevation, activities, communications, and interactions between squirrels and with humans.
+
+2. 2018 Central Park Squirrel Census - Hectare Data:
+(https://data.cityofnewyork.us/Environment/2018-Central-Park-Squirrel-Census-Hectare-Data/ej9h-v6g2)
+
+This table contains environmental data related to each of the 350 “countable” hectares of Central Park. Examples include 
+
+weather, litter, animals sighted, and human density.
+
+# *Exploratory analysis*
+
+## Load in Dataset
+
+We downloaded the data from the web and called it `hectare`. 
+
+```{r, echo= FALSE, message=FALSE}
+hectare = read_csv("./data/2018_Central_Park_Squirrel_Census_-_Hectare_Data.csv") %>% 
+janitor::clean_names()
+```
+
+
+## Tidy the Dataset 
+
+We created following new variables: 
+
+`temperature_fehrenheit` : temperatures for different time during a day. 
+
+`rate`: the number of squirrels in each hectare observed by sighters per minute. 
+
+`temperature_category` : there are five categories for temperatures, “below 50”, “50-60”, “60-70”, “above 70”, “others”. 
+
+`noninteraction`: total squirrels'activity count for running, chasing, climbing, eating and foraging.
+
+`interaction` : total activity count for interaction between squirrels and predators or human, including
+
+kukking, quaaing, tail flags, tail twitching, being indifferent and running away. 
+
+
+```{r, echo=FALSE, message=FALSE}
+numextract <- function(string){ 
+  str_extract(string, "\\-*\\d+\\.*\\d*")
+}
+
+hectare = 
+  hectare %>% 
+  mutate(
+      temperature_fahrenheit = numextract(sighter_observed_weather_data),
+      rate = number_of_squirrels/total_time_of_sighting
+)
+
+squrriel = read_csv("./data/2018_Central_Park_Squirrel_Census_-_Squirrel_Data.csv") %>% 
+janitor::clean_names() %>% 
+mutate(age_group = ifelse(age %in% "Adult","Adult",ifelse(age %in% "Juvenile","Juvenile","Unknown")),
+      age_group = fct_relevel(as.factor(age_group),c("Juvenile","Adult","Unknown")),
+      location = fct_relevel(as.factor(location),c("Above Ground","Ground Plane")),
+      primary_fur_color = fct_relevel(as.factor(primary_fur_color),c("Cinnamon","Gray","Black"))) %>% 
+separate(date,into=c('day','year'),sep=4) %>% 
+separate(day,into = c('month','Date'), sep=2) %>% 
+mutate(Day = recode(Date, "06"="Day1", "07"="Day2", "08"="Day3", "10"="Day4", "12"="Day5", "13"="Day6", "14"="Day7", "17"="Day8", "18"="Day9", "19"="Day10", "20"="Day11"),
+       Day = fct_relevel(Day, c("Day1", "Day2", "Day3", "Day4", "Day5", "Day6", "Day7", "Day8", "Day9", "Day10", "Day11")))
+```
+
+## *Figures*
+
+### Boxplot for Temperature and Rate of Squirrel observed
+
+The boxplot described the relationship between temperature and rate of squirrel observed
+
+
+```{r, echo=FALSE}
+temperature_df =   
+hectare %>%   
+  filter(temperature_fahrenheit > 29) %>% 
+  mutate(
+    temperature_fahrenheit = recode(temperature_fahrenheit, `-50` = "50"),
+    temperature_category = ifelse(temperature_fahrenheit <= "50", "below 50",
+                           ifelse("50"< temperature_fahrenheit & temperature_fahrenheit<= "60", "50-60",
+                           ifelse("60"< temperature_fahrenheit & temperature_fahrenheit<= "70", "60-70",
+                           ifelse("70"< temperature_fahrenheit, "above 70","others")))),
+    temperature_category = as.factor(temperature_category)
+ ) %>%
+  mutate(
+    temperature_category = factor(temperature_category, levels = c("below 50","50-60", "60-70", "above 70"))
+  ) %>% 
+  plot_ly( y = ~rate, color = ~temperature_category, type = "box", colors = "Set1")
+
+temperature_df
+
+```
+
+During the study period (10/7/2018-10/19/2018), the temperatures' range is between 50 and 70 degrees Fahrenheit.Below 50 
+
+degrees Fahrenheit, the number of squirrels observed drastically declined. Above 50, the change on rate of squirrel 
+
+observed is not significant. 
+
+
+### Bubble plot for rate of squirrel observed 
+
+The bubble plot describes how conditions affect the rate of squirrel with different levels of litter amount
+
+```{r, echo = FALSE}
+condition_litter_dataset = 
+  hectare %>% 
+  select(hectare_conditions, litter, rate) %>% 
+  na.omit() 
+
+
+condition_litter_dataset = 
+condition_litter_dataset %>% 
+  mutate(
+ average =  ifelse(litter == "Abundant"& hectare_conditions == "Busy","abundant_busy",
+                ifelse(litter == "Abundant"& hectare_conditions == "Calm","abundant_calm",
+                  ifelse(litter == "Abundant"& hectare_conditions == "Medium","abundant_medium",
+         ifelse(litter == "Abundant"& hectare_conditions == "Moderate","abundant_moderate",
+            ifelse(litter == "Some"& hectare_conditions == "Busy","some_busy",
+                ifelse(litter == "Some"& hectare_conditions == "Calm","some_calm",
+                  ifelse(litter == "Some"& hectare_conditions == "Medium","some_medium",
+         ifelse(litter == "Some"& hectare_conditions == "Moderate","some_moderate",
+
+ifelse(litter == "None"& hectare_conditions == "Busy","none_busy",
+                ifelse(litter == "None"& hectare_conditions == "Calm","none_calm",
+                  ifelse(litter == "None"& hectare_conditions == "Medium", "none_medium",
+         ifelse(litter == "None"& hectare_conditions == "Moderate","none_moderate", "others"))))))))))))
+)
+
+rate_mean = 
+condition_litter_dataset %>% 
+  group_by(average) %>% 
+  select(hectare_conditions, litter, rate, average) %>% 
+  mutate(
+    rate_average = mean(rate, na.rm = TRUE)
+  ) %>% 
+  distinct(rate_average) %>% 
+  separate(average, into = c("litter", "hectare_condition"), sep = "_") %>% 
+  na.omit()
+
+plot = 
+rate_mean %>% 
+  mutate(
+    hectare_condition = factor(hectare_condition, levels = c("calm", "moderate", "medium","busy")),
+    litter = factor(litter, levels = c("none", "some", "abundant"))
+    ) %>% 
+ggballoonplot(x = "hectare_condition", y = "litter", size = "rate_average", fill = "rate_average", alpha = 0.5) + 
+  scale_fill_viridis_c(option = "C") +
+  labs(
+    title = "Litter, Condition and Mean Rate of Squirrel Observed",
+    fill = "Mean Rate of Squirrel",
+    size = "Mean Rate of Squirrel"
+  )
+
+plot
+```
+
+
+The amount of litter and noise levels in the environment did not affect squirrel distribution much; however, when there 
+
+was an abundant amount of litters and high level of noise in the environment, the number of squirrels at the lowest.   
+
+This partially aligns with our expectations that squirrels stay away from the crowds and occupied areas but why other 
+
+levels of litter and noise did not affect the number of squirrels as much worths further investigation.  
+
+
+### Line Graph for Each Activity Counts
+
+This graph indicates the total activity frequency for juvenile and adult squirrels during study period. The activity 
+
+includes non-interative and interative with predators or human. 
+
+```{r, echo = FALSE}
+squrriel %>% 
+  mutate(Day = recode(Day, "Day1"=1, "Day2"=2, "Day3"=3, "Day4"=4, "Day5"=5, "Day6"=6, "Day7"=7, "Day8"=8, "Day9"=9, "Day10"=10, "Day11"=11)) %>% 
+  group_by(Day, age_group) %>% 
+  summarise(
+    running = sum(running == "TRUE"),
+    chasing = sum(chasing == "TRUE"),
+    climbing = sum(climbing == "TRUE"),
+    eating = sum(eating == "TRUE"),
+    approaches = sum(approaches == "TRUE"),
+    foraging = sum(foraging == "TRUE"),
+    indifferent = sum(indifferent == "TRUE"),
+    kuks = sum(kuks == "TRUE"),
+    quaas = sum(quaas == "TRUE"),
+    runs_from = sum(runs_from == "TRUE"),
+    tail_flags = sum(tail_flags == "TRUE"),
+    tail_twitches = sum( tail_twitches== "TRUE")
+    ) %>% 
+    pivot_longer(
+    running:tail_twitches,
+    names_to = "activity", 
+    values_to = "number_of_ture")%>%
+  mutate(activity = as.factor(activity)) %>% 
+  ggplot(aes(x=Day, y=number_of_ture, group=activity))+
+geom_line(aes(color=activity))+
+  geom_point(aes(color=activity))+
+  facet_grid(.~age_group)+
+  labs(
+    title = "Different activity frequency across the experiment",
+    x= "Days of experiment",
+    y = "Frequency"
+    )
+  
+```
+
+Generally, the activity frequency is significantly higher among adult squirrels than juvenile. 
+
+
+### Bar Graph for Comparison Between Interative and Non-interative Activity Counts
+
+  This graphs show the frequency of squirrel's non-interative and interative activities with predactors  or human in the park.
+
+
+```{r, echo = FALSE}
+squrriel %>% 
+  group_by(Day) %>% 
+  summarise(
+    running = sum(running == "TRUE"),
+    chasing = sum(chasing == "TRUE"),
+    climbing = sum(climbing == "TRUE"),
+    eating = sum(eating == "TRUE"),
+    approaches = sum(approaches == "TRUE"),
+    foraging = sum(foraging == "TRUE"),
+    indifferent = sum(indifferent == "TRUE"),
+    kuks = sum(kuks == "TRUE"),
+    quaas = sum(quaas == "TRUE"),
+    runs_from = sum(runs_from == "TRUE"),
+    tail_flags = sum(tail_flags == "TRUE"),
+    tail_twitches = sum( tail_twitches== "TRUE")
+    )  %>%  
+mutate(noninteraction = running + chasing + climbing + eating + foraging,
+         interaction = kuks + quaas + tail_flags + tail_twitches + indifferent + runs_from) %>% 
+  select(Day,noninteraction, interaction) %>% 
+ plot_ly(x = ~Day, y = ~interaction, type = 'bar', name = 'Interaction', marker = list(color = 'rgb(149,130,189)')) %>%
+  add_trace(y = ~noninteraction, name = 'Noninteraction', marker = list(color = 'rgb(100,100,100)')) %>%
+  layout(xaxis = list(title = "", tickangle = -45),
+         yaxis = list(title = ""),
+         margin = list(b = 200),
+         barmode = 'group')
+
+```
+
+Overall, non-interative activity counts were higher than interactive activity counts for the whole study period. There 
+
+was an obvious decreasing trend on both activity counts during the last few days. 
+
+## *Discussion* 
+
+### Finding
+
+It is also interesting to see how various factors including temperature, park condition, influence both squirrel’s own 
+
+behaviours as well as their interactions with the external environment (including humans and potential predators). 
+
+A few limitations of this dataset worth mentioning here. The overall sample size was small making stratified analysis 
+
+difficult. We therefore did not perform analysis on specific squirrel activity and could not comment on how the predictors 
+of interest (temperature, condition,  ) here will independently affect each activity of interest. In addition, all data 
+
+was only collected for 11 days over a period of two consecutive weeks and the temperatures did not vary as much making our 
+conclusion on the association between temperature and squirrel distribution less convincing. A followup problem from this 
+
+is that we were not able to make any inference about change in squirrel’s behaviours based on several predictors tested as 
+our samples were limited and were best represent the squirrel population in Central Park. To our knowledge, there was only 
+one other squirrel census conducted previously in Atlanta, our analysis based on data collected in 2018 provides the most 
+
+up-to-date information on squirrel behaviors and their interactions with the environment, humans, and other predators. We 
+
+therefore believe that our attempt to discover factors associated with squirrel distribution or squirrel behaviours still gave some interesting findings. However, to draw a more definitive conclusion, further investigation on significant predictors of squirrel behaviour patterns should be conducted on wider squirrel populations that span wider geographic areas with longer observation period.  
+
+
+
+
+
+
