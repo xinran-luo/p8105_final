@@ -203,9 +203,7 @@ degrees Fahrenheit, the number of squirrels observed drastically declined. Above
 observed is not significant. 
 
 
-
-
-### Bubble plot for  affect rate of squirrel observed 
+### Bubble plot for rate of squirrel observed 
 
 The bubble plot describes how conditions affect the rate of squirrel with different levels of litter amount
 
@@ -265,7 +263,11 @@ plot
 
 The amount of litter and noise levels in the environment did not affect squirrel distribution much; however, when there 
 
-was an abundant amount of litters and high level of noise in the environment, the number of squirrels at the lowest.    
+was an abundant amount of litters and high level of noise in the environment, the number of squirrels at the lowest.   
+
+This partially aligns with our expectations that squirrels stay away from the crowds and occupied areas but why other 
+
+levels of litter and noise did not affect the number of squirrels as much worths further investigation.  
 
 
 ### Line Graph for Each Activity Counts
@@ -349,6 +351,30 @@ mutate(noninteraction = running + chasing + climbing + eating + foraging,
 Overall, non-interative activity counts were higher than interactive activity counts for the whole study period. There 
 
 was an obvious decreasing trend on both activity counts during the last few days. 
+
+## *Discussion* 
+
+### Finding
+
+It is also interesting to see how various factors including temperature, park condition, influence both squirrel’s own 
+
+behaviours as well as their interactions with the external environment (including humans and potential predators). 
+
+A few limitations of this dataset worth mentioning here. The overall sample size was small making stratified analysis 
+
+difficult. We therefore did not perform analysis on specific squirrel activity and could not comment on how the predictors 
+of interest (temperature, condition,  ) here will independently affect each activity of interest. In addition, all data 
+
+was only collected for 11 days over a period of two consecutive weeks and the temperatures did not vary as much making our 
+conclusion on the association between temperature and squirrel distribution less convincing. A followup problem from this 
+
+is that we were not able to make any inference about change in squirrel’s behaviours based on several predictors tested as 
+our samples were limited and were best represent the squirrel population in Central Park. To our knowledge, there was only 
+one other squirrel census conducted previously in Atlanta, our analysis based on data collected in 2018 provides the most 
+
+up-to-date information on squirrel behaviors and their interactions with the environment, humans, and other predators. We therefore believe that our attempt to discover factors associated with squirrel distribution or squirrel behaviours still gave some interesting findings. However, to draw a more definitive conclusion, further investigation on significant predictors of squirrel behaviour patterns should be conducted on wider squirrel populations that span wider geographic areas with longer observation period.  
+
+
 
 
 $$ Rate \ of \ Squirrel \ Observed \sim \beta_0 + \beta_1 temperature + \beta_2 litterNone + \beta_3 litterSome + \beta_4 litterAbundant + \beta_5 hectare_conditionsCalm +\beta_6 hectare_conditionsModerate +\beta_7 hectare_conditionsMedium +\beta_8 hectare_conditionsBusy + \varepsilon_i,$$
