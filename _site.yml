@@ -12,8 +12,6 @@ navbar:
       href: Report.html
     - text: "Analysis"
       menu:
-        - text: "descriptive by xuan"
-          href: Final_Anran.html
         - text: "Trends over time"
           href: https://junyinxixi.shinyapps.io/shiny_2
         - text: "Spatial trends/visualization"

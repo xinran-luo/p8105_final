@@ -201,9 +201,9 @@ temperature_df
 
 During the study period (10/7/2018-10/19/2018), the temperatures' range is between 50 and 70 degrees Fahrenheit.Below 50 
 
-degrees Fahrenheit, the number of squirrels observed drastically declined. Above 50, the change on rate of squirrel 
+degrees Fahrenheit, the number of squirrels observed drastically declined. Above 50, the 
 
-observed is not significant. 
+change on rate of squirrel observed is not significant. 
 
 
 #### Bubble plot for rate of squirrel observed 
