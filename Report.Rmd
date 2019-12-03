@@ -378,19 +378,21 @@ up-to-date information on squirrel behaviors and their interactions with the env
 
 
 $$ Rate \ of \ Squirrel \ Observed \sim \beta_0 + \beta_1 temperature + \beta_2 litterNone + \beta_3 litterSome + \beta_4 litterAbundant + \beta_5 hectare_conditionsCalm +\beta_6 hectare_conditionsModerate +\beta_7 hectare_conditionsMedium +\beta_8 hectare_conditionsBusy + \varepsilon_i,$$
-```{r}
-hectare_model=hectare%>%
+```{r, echo=FALSE}
+hectare_model =
+  hectare %>%
   mutate(
-    temperature_fahrenheit=as.numeric(temperature_fahrenheit)
+    temperature_fahrenheit = as.numeric(temperature_fahrenheit)
   )
-linearMod <- lm(rate ~ temperature_fahrenheit+litter+hectare_conditions, data=hectare_model)
+linearMod <- lm(rate ~ temperature_fahrenheit+litter+hectare_conditions, data = hectare_model)
 
 
-linearMod%>%
+linearMod %>%
 broom::tidy() %>% 
   select(term, estimate, p.value) %>%
-  knitr::kable(digit=3)
+  knitr::kable(digit = 3)
 ```
+
 
 
 
