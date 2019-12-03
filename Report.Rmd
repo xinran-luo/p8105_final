@@ -71,13 +71,9 @@ In this project, we aimed to examine factors associated with the distribution of
 3023 squirrels' information,  including location coordinates, age, primary and secondary fur color, elevation, activities, communications, and interactions between squirrels and their predators or humans.
 
 2. [2018 Central Park Squirrel Census - Hectare Data](https://data.cityofnewyork.us/Environment/2018-Central-Park-Squirrel-Census-Hectare-Data/ej9h-v6g2)
-<<<<<<< HEAD
 
-contains environmental data for the 350 “countable” hectares in Central Park, including temperature, litter, noise, 
-=======
 contains environmental data for the 350 “countable” hectares in Central Park, including temperature, litter, noise, animals besides of squirrels sighted, and human density.
 
->>>>>>> ebcaa8424deb595e83dc011a02b078ac562e11d8
 
 # Exploratory analysis
 
