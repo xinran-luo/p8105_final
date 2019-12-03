@@ -78,7 +78,7 @@ contains environmental data for the 350 “countable” hectares in Central Park
 
 ### Load in Dataset
 
-We downloaded the data from the web and called it `hectare`. 
+We downloaded the data from the web and called them `squirrel` and `hectare`. 
 
 ```{r, echo= FALSE, message=FALSE}
 hectare = read_csv("./data/2018_Central_Park_Squirrel_Census_-_Hectare_Data.csv") %>% 
@@ -90,9 +90,27 @@ janitor::clean_names()
 
 ### Explore the Dataset 
 
-The two dataset includes totally 3025 squirrels and 350 hectares in Central Park respectively. Volunteer sighters 
-observed for 11 days from 10/7/2018-10/19/2018. 
+There are three types of fur colors for squirrels observed in the park, and the table shows the number of adult and juvenile squirrels with different fur colors. 
 
+```{r, echo=FALSE, message = FALSE}
+demo = 
+squrriel %>% 
+  select(age, primary_fur_color) %>% 
+  rename("Age_group" = age) %>% 
+  count(Age_group, primary_fur_color) 
+
+demographic_info =
+demo %>% 
+  na.omit() %>% 
+  filter(Age_group != "?") %>% 
+pivot_wider(
+    names_from = "primary_fur_color",
+    values_from = "n"
+  ) %>% 
+knitr::kable()
+demographic_info
+
+```
 
 
 For easier analysis on the two datasets, we created following new variables: 
@@ -121,10 +139,11 @@ hectare =
       rate = number_of_squirrels/total_time_of_sighting
 )
 
+
 squrriel = read_csv("./data/2018_Central_Park_Squirrel_Census_-_Squirrel_Data.csv") %>% 
 janitor::clean_names() %>% 
 mutate(age_group = ifelse(age %in% "Adult","Adult",ifelse(age %in% "Juvenile","Juvenile","Unknown")),
-      age_group = fct_relevel(as.factor(age_group),c("Juvenile","Adult","Unknown")),
+      age_group = fct_relevel(as.factor(age),c("Juvenile","Adult","Unknown")),
       location = fct_relevel(as.factor(location),c("Above Ground","Ground Plane")),
       primary_fur_color = fct_relevel(as.factor(primary_fur_color),c("Cinnamon","Gray","Black"))) %>% 
 separate(date,into=c('day','year'),sep=4) %>% 
