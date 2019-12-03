@@ -115,7 +115,7 @@ This table contains environmental data related to each of the 350 â€œcountableâ€
 
 weather, litter, animals sighted, and human density.
 
-# *Exploratory analysis*
+# *Exploratory Analysis*
 
 ## Load in Dataset
 
@@ -352,6 +352,39 @@ Overall, non-interative activity counts were higher than interactive activity co
 
 was an obvious decreasing trend on both activity counts during the last few days. 
 
+# *Statistical Analysis*
+
+From the boxplot and bubble plot above we can roughly see the relationship between the rate of squirrel observed and temperature, litter and hectare conditions. After filtering the missing values in "litter" and "hectare_conditions", we fit a linear regression model to formally test for these associations.
+
+
+$$ Rate \ of \ Squirrel \ Observed \sim \beta_0 + \beta_1 temperature + \beta_2 litterSome + \beta_3 litterAbundant +\beta_4 conditionsModerate +\beta_5 conditionsMedium +\beta_6 conditionsBusy + \varepsilon_i,$$
+```{r}
+hectare_model=hectare%>%
+  mutate(
+    temperature_fahrenheit=as.numeric(temperature_fahrenheit),
+    litter = ifelse(is.na(litter) == TRUE, 'Unknown', litter),
+    litter = fct_relevel(as.factor(litter),c("Unknown","None","Some","Abundant")),
+    hectare_conditions = ifelse(is.na(hectare_conditions) == TRUE, 'Unknown', hectare_conditions),
+    hectare_conditions = fct_relevel(as.factor(hectare_conditions), c("Unknown", "Calm", "Moderate", "Medium","Busy"))
+  )%>%
+    filter(hectare_conditions!="Calm, Busy",
+           litter!="Unknown",
+           hectare_conditions!="Unknown")
+
+linearMod <- lm(rate ~ temperature_fahrenheit+litter+hectare_conditions, data=hectare_model)
+
+
+linearMod%>%
+broom::tidy() %>% 
+  select(term, estimate, p.value) %>%
+  knitr::kable(digit=3)
+```
+
+
+Different from the boxplot, "temperature_fahrenheit" is a continuous variable in the model because we want to make full use of the dataset and increase the power of the hypothesis test. Consistent with the boxplot above, we have enough evidence to claim that there would be more squirrels observed when temperature is high, at 5% level of significance.
+
+The negative estimates of "litterAbundant" and "hectare_conditionsBusy" indicate that when litter is abundant and there is a high level of noise in the hectare, there will be least squirrels observed within every sighting time unit, which is also consistent with the visualization above. However, the amount of litter and level of noise are not significantly associated with rate of squirrel observed, which may be due to small sample size and the presence of missing values.
+
 ## *Discussion* 
 
 ### Finding
@@ -377,22 +410,4 @@ up-to-date information on squirrel behaviors and their interactions with the env
 
 
 
-$$ Rate \ of \ Squirrel \ Observed \sim \beta_0 + \beta_1 temperature + \beta_2 litterNone + \beta_3 litterSome + \beta_4 litterAbundant + \beta_5 hectare_conditionsCalm +\beta_6 hectare_conditionsModerate +\beta_7 hectare_conditionsMedium +\beta_8 hectare_conditionsBusy + \varepsilon_i,$$
-```{r}
-hectare_model=hectare%>%
-  mutate(
-    temperature_fahrenheit=as.numeric(temperature_fahrenheit)
-  )
-linearMod <- lm(rate ~ temperature_fahrenheit+litter+hectare_conditions, data=hectare_model)
-
-
-linearMod%>%
-broom::tidy() %>% 
-  select(term, estimate, p.value) %>%
-  knitr::kable(digit=3)
-```
-
-
-
-
-
+ 
