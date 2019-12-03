@@ -354,7 +354,7 @@ Different from the boxplot, "temperature_fahrenheit" is a continuous variable in
 
 The negative estimates of "litterAbundant" and "hectare_conditionsBusy" indicate that when litter is abundant and there is a high level of noise in the hectare, there will be least squirrels observed within every sighting time unit, which is also consistent with the visualization above. However, the amount of litter and level of noise are not significantly associated with rate of squirrel observed, which may be due to small sample size and the presence of missing values.
 
-## Discussion 
+# Discussion 
 
 ### Finding
 
