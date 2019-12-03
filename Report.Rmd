@@ -377,7 +377,11 @@ up-to-date information on squirrel behaviors and their interactions with the env
 
 
 
-$$ Rate \ of \ Squirrel \ Observed \sim \beta_0 + \beta_1 temperature + \beta_2 litterNone + \beta_3 litterSome + \beta_4 litterAbundant + \beta_5 hectare_conditionsCalm +\beta_6 hectare_conditionsModerate +\beta_7 hectare_conditionsMedium +\beta_8 hectare_conditionsBusy + \varepsilon_i,$$
+$$ Rate \ of \ Squirrel \ Observed \sim \beta_0 + \beta_1 temperature + \beta_2 litterNone + \beta_3 litterSome + \beta_4
+
+litterAbundant + \beta_5 hectare_conditionsCalm +\beta_6 hectare_conditionsModerate +\beta_7 hectare_conditionsMedium 
+
++\beta_8 hectare_conditionsBusy + \varepsilon_i,$$
 ```{r, echo=FALSE}
 hectare_model =
   hectare %>%
