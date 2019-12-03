@@ -325,7 +325,7 @@ mutate(noninteraction = running + chasing + climbing + eating + foraging,
 
 Overall, non-interative activity counts were higher than interactive activity counts for the whole study period.There was an obvious decreasing trend on both activity counts during the last few days. 
 
-# *Statistical Analysis*
+# Statistical Analysis
 
 From the boxplot and bubble plot above we can roughly see the relationship between the rate of squirrel observed and temperature, litter and hectare conditions. After filtering the missing values in "litter" and "hectare_conditions", we fit a linear regression model to formally test for these associations.
 
@@ -358,7 +358,7 @@ Different from the boxplot, "temperature_fahrenheit" is a continuous variable in
 
 The negative estimates of "litterAbundant" and "hectare_conditionsBusy" indicate that when litter is abundant and there is a high level of noise in the hectare, there will be least squirrels observed within every sighting time unit, which is also consistent with the visualization above. However, the amount of litter and level of noise are not significantly associated with rate of squirrel observed, which may be due to small sample size and the presence of missing values.
 
-## *Discussion* 
+## Discussion 
 
 ### Finding
 
