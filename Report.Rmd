@@ -65,7 +65,7 @@ In this project, we aimed to examine factors associated with the distribution of
 
 # Data
 
-1. [2018 Central Park Squirrel Census - Squirrel data](https://data.cityofnewyork.us/Environment/2018-Central-Park-Squirrel-Census-Squirrel-Data/vfnx-vebw)contains 3023 squirrels' information,  including location coordinates, age, primary and secondary fur color, elevation, activities, communications, and interactions between squirrels and their predators or humans.
+1. [2018 Central Park Squirrel Census - Squirrel data](https://data.cityofnewyork.us/Environment/2018-Central-Park-Squirrel-Census-Squirrel-Data/vfnx-vebw) contains 3023 squirrels' information,  including location coordinates, age, primary and secondary fur color, elevation, activities, communications, and interactions between squirrels and their predators or humans.
 
 2. [2018 Central Park Squirrel Census - Hectare Data](https://data.cityofnewyork.us/Environment/2018-Central-Park-Squirrel-Census-Hectare-Data/ej9h-v6g2)
 contains environmental data for the 350 “countable” hectares in Central Park, including temperature, litter, noise, animals besides of squirrels sighted, and human density.
@@ -327,7 +327,7 @@ From the boxplot and bubble plot above we can roughly see the relationship betwe
 
 
 $$ Rate \ of \ Squirrel \ Observed \sim \beta_0 + \beta_1 temperature + \beta_2 litterSome + \beta_3 litterAbundant +\beta_4 conditionsModerate +\beta_5 conditionsMedium +\beta_6 conditionsBusy + \varepsilon_i,$$
-```{r}
+```{r, echo = FALSE, message= FALSE}
 hectare_model=hectare%>%
   mutate(
     temperature_fahrenheit=as.numeric(temperature_fahrenheit),
@@ -355,8 +355,6 @@ Different from the boxplot, "temperature_fahrenheit" is a continuous variable in
 The negative estimates of "litterAbundant" and "hectare_conditionsBusy" indicate that when litter is abundant and there is a high level of noise in the hectare, there will be least squirrels observed within every sighting time unit, which is also consistent with the visualization above. However, the amount of litter and level of noise are not significantly associated with rate of squirrel observed, which may be due to small sample size and the presence of missing values.
 
 # Discussion 
-
-### Finding
 
 It is also interesting to see how various factors including temperature, park condition, influence both squirrel’s own behaviours as well as their interactions with the external environment (including humans and potential predators). 
 
