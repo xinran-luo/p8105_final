@@ -71,6 +71,7 @@ In this project, we aimed to examine factors associated with the distribution of
 3023 squirrels' information,  including location coordinates, age, primary and secondary fur color, elevation, activities, communications, and interactions between squirrels and their predators or humans.
 
 2. [2018 Central Park Squirrel Census - Hectare Data](https://data.cityofnewyork.us/Environment/2018-Central-Park-Squirrel-Census-Hectare-Data/ej9h-v6g2)
+
 contains environmental data for the 350 “countable” hectares in Central Park, including temperature, litter, noise, animals besides of squirrels sighted, and human density.
 
 
@@ -324,27 +325,40 @@ mutate(noninteraction = running + chasing + climbing + eating + foraging,
 
 Overall, non-interative activity counts were higher than interactive activity counts for the whole study period.There was an obvious decreasing trend on both activity counts during the last few days. 
 
-### Model
+# *Statistical Analysis*
 
-Model for association rate of squirrels observed and potential factors, including temperature, litter, noise leve.  
+From the boxplot and bubble plot above we can roughly see the relationship between the rate of squirrel observed and temperature, litter and hectare conditions. After filtering the missing values in "litter" and "hectare_conditions", we fit a linear regression model to formally test for these associations.
 
-$$ Rate \ of \ Squirrel \ Observed \sim \beta_0 + \beta_1 temperature + \beta_2 litterNone + \beta_3 litterSome + \beta_4 litterAbundant + \beta_5 hectare_conditionsCalm +\beta_6 hectare_conditionsModerate +\beta_7 hectare_conditionsMedium +\beta_8 hectare_conditionsBusy + \varepsilon_i,$$
-```{r, echo=FALSE}
-hectare_model =
-  hectare %>%
+
+$$ Rate \ of \ Squirrel \ Observed \sim \beta_0 + \beta_1 temperature + \beta_2 litterSome + \beta_3 litterAbundant +\beta_4 conditionsModerate +\beta_5 conditionsMedium +\beta_6 conditionsBusy + \varepsilon_i,$$
+```{r}
+hectare_model=hectare%>%
   mutate(
-    temperature_fahrenheit = as.numeric(temperature_fahrenheit)
-  )
-linearMod <- lm(rate ~ temperature_fahrenheit+litter+hectare_conditions, data = hectare_model)
+    temperature_fahrenheit=as.numeric(temperature_fahrenheit),
+    litter = ifelse(is.na(litter) == TRUE, 'Unknown', litter),
+    litter = fct_relevel(as.factor(litter),c("Unknown","None","Some","Abundant")),
+    hectare_conditions = ifelse(is.na(hectare_conditions) == TRUE, 'Unknown', hectare_conditions),
+    hectare_conditions = fct_relevel(as.factor(hectare_conditions), c("Unknown", "Calm", "Moderate", "Medium","Busy"))
+  )%>%
+    filter(hectare_conditions!="Calm, Busy",
+           litter!="Unknown",
+           hectare_conditions!="Unknown")
 
-linearMod %>%
+linearMod <- lm(rate ~ temperature_fahrenheit+litter+hectare_conditions, data=hectare_model)
+
+
+linearMod%>%
 broom::tidy() %>% 
   select(term, estimate, p.value) %>%
-  knitr::kable(digit = 3)
+  knitr::kable(digit=3)
 ```
 
 
-# Discussion
+Different from the boxplot, "temperature_fahrenheit" is a continuous variable in the model because we want to make full use of the dataset and increase the power of the hypothesis test. Consistent with the boxplot above, we have enough evidence to claim that there would be more squirrels observed when temperature is high, at 5% level of significance.
+
+The negative estimates of "litterAbundant" and "hectare_conditionsBusy" indicate that when litter is abundant and there is a high level of noise in the hectare, there will be least squirrels observed within every sighting time unit, which is also consistent with the visualization above. However, the amount of litter and level of noise are not significantly associated with rate of squirrel observed, which may be due to small sample size and the presence of missing values.
+
+## *Discussion* 
 
 ### Finding
 
@@ -352,7 +366,6 @@ It is also interesting to see how various factors including temperature, park co
 
 A few limitations of this dataset worth mentioning here. The overall sample size was small making stratified analysis difficult. We therefore did not perform analysis on specific squirrel activity and could not comment on how the predictors of interest (temperature, condition,  ) here will independently affect each activity of interest. In addition, all data was only collected for 11 days over a period of two consecutive weeks and the temperatures did not vary as much making our conclusion on the association between temperature and squirrel distribution less convincing. A followup problem from this is that we were not able to make any inference about change in squirrel’s behaviours based on several predictors tested as 
 our samples were limited and were best represent the squirrel population in Central Park. To our knowledge, there was only one other squirrel census conducted previously in Atlanta, our analysis based on data collected in 2018 provides the most up-to-date information on squirrel behaviors and their interactions with the environment, humans, and other predators. We therefore believe that our attempt to discover factors associated with squirrel distribution or squirrel behaviours still gave some interesting findings. However, to draw a more definitive conclusion, further investigation on significant predictors of squirrel behaviour patterns should be conducted on wider squirrel populations that span wider geographic areas with longer observation period.  
-
 
 
 
