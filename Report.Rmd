@@ -5,6 +5,7 @@ editor_options:
   chunk_output_type: console
 ---
 
+
 ```{r setup, include=FALSE, message =FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
@@ -350,7 +351,20 @@ Overall, non-interative activity counts were higher than interactive activity co
 was an obvious decreasing trend on both activity counts during the last few days. 
 
 
+$$ Rate \ of \ Squirrel \ Observed \sim \beta_0 + \beta_1 temperature + \beta_2 litterNone + \beta_3 litterSome + \beta_4 litterAbundant + \beta_5 hectare_conditionsCalm +\beta_6 hectare_conditionsModerate +\beta_7 hectare_conditionsMedium +\beta_8 hectare_conditionsBusy + \varepsilon_i,$$
+```{r}
+hectare_model=hectare%>%
+  mutate(
+    temperature_fahrenheit=as.numeric(temperature_fahrenheit)
+  )
+linearMod <- lm(rate ~ temperature_fahrenheit+litter+hectare_conditions, data=hectare_model)
 
+
+linearMod%>%
+broom::tidy() %>% 
+  select(term, estimate, p.value) %>%
+  knitr::kable(digit=3)
+```
 
 
 
