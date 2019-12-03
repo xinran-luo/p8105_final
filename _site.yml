@@ -15,11 +15,7 @@ navbar:
         - text: "descriptive by xuan"
           href: Final_Anran.html
         - text: "Trends over time"
-<<<<<<< HEAD
           href: https://junyinxixi.shinyapps.io/shiny_2
-=======
-          href: https://junyinxixi.shinyapps.io/shiny_2/
->>>>>>> 5d766ff30c084c082559d1dc3841d90dcfad5cbc
         - text: "Spatial trends/visualization"
           href: https://xinran-hhh.shinyapps.io/shiny_app/
     - icon: fa-envelope fa-lg
