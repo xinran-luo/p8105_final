@@ -8,14 +8,12 @@ navbar:
   right:
     - text: "Data"
       href: data.html
+    - text: "Report"
+      href: Report.html
     - text: "Analysis"
       menu:
-        - text: "descriptive by anran"
-          href: Final_Anran.html
-        - text: "descriptive by xuan"
-          href: .html
         - text: "Trends over time"
-          href: https://junyinxixi.shinyapps.io/shiny_2/
+          href: https://junyinxixi.shinyapps.io/shiny_2
         - text: "Spatial trends/visualization"
           href: https://xinran-hhh.shinyapps.io/shiny_app/
     - icon: fa-envelope fa-lg

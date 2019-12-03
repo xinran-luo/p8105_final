@@ -106,7 +106,6 @@ squ_ac=multinom(running+chasing+climbing+eating+foraging~age+litter+temperature,
 
 
 coef(squ_ac)%>%
-broom::tidy() %>% 
   knitr::kable()
 
 

@@ -1,9 +1,7 @@
 ---
 title: "Picnic with Squirrels in Central Park"
 output: 
-  html_document:
-    toc: true
-    toc_float: true
+  html_document
 ---
 
 ```{r setup, include=FALSE}
@@ -12,12 +10,3 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ![](squirrel1.jpg)
 
-# Movitation
-
-# Research questions
-
-# Data source
-
-# Findings
-
-# Discussion
