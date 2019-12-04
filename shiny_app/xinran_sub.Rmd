@@ -31,7 +31,7 @@ squrriel = read_csv("./data/2018_Central_Park_Squirrel_Census_-_Squirrel_Data.cs
 janitor::clean_names() %>% 
 mutate(sighter_measurement = as.numeric(above_ground_sighter_measurement),
        age = ifelse(age %in% "Adult","Adult",ifelse(age %in% "Juvenile","Juvenile","Unknown")),
-       primary_fur_color = ifelse(is.na(primary_fur_color) == TRUE, 'No primary fur color', primary_fur_color))%>%
+       primary_fur_color = ifelse(is.na(primary_fur_color) == TRUE, 'Unknown', primary_fur_color))%>%
 separate(date,into=c('day','year'),sep=4) %>% 
 separate(day,into = c('month','Date'), sep=2) %>% 
 separate(hectare,into = c('hec_num','hec_let'), sep=2)%>%
