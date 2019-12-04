@@ -121,7 +121,7 @@ For easier analysis on the two datasets, we created following new variables:
 `noninteraction`: total squirrels'activity count for running, chasing, climbing, eating and foraging.
 
 `interaction` : total activity count for interaction between squirrels and predators or human, including
-kukking, quaaing, tail flags, tail twitching, being indifferent and running away. 
+kukking, quaasing, tail flags, tail twitching, being indifferent and running away. 
 
 
 ```{r, echo=FALSE, message=FALSE}
@@ -350,9 +350,9 @@ broom::tidy() %>%
 ```
 
 
-Different from the boxplot, "temperature_fahrenheit" is a continuous variable in the model because we want to make full use of the dataset and increase the power of the hypothesis test. Consistent with the boxplot above, we have enough evidence to claim that there would be more squirrels observed when temperature is high, at 5% level of significance.
+Different from the boxplot, instead of `temperature category`, we use the continuous variable `temperature_fahrenheit` in the model because we want to make full use of the dataset and increase the power of the hypothesis test. Consistent with the boxplot above, we have enough evidence to claim that there would be more squirrels observed when temperature is higher, at 5% level of significance.
 
-The negative estimates of "litterAbundant" and "hectare_conditionsBusy" indicate that when litter is abundant and there is a high level of noise in the hectare, there will be least squirrels observed within every sighting time unit, which is also consistent with the visualization above. However, the amount of litter and level of noise are not significantly associated with rate of squirrel observed, which may be due to small sample size and the presence of missing values.
+The negative estimates of `litterAbundant` and `hectare_conditionsBusy` indicate that when litter is abundant and there is a high level of noise in the hectare, there will be least squirrels observed within every sighting time unit, which is also consistent with the visualization above. However, the amount of litter and level of noise are not significantly associated with rate of squirrel observed, which may be due to small sample size and the presence of missing values.
 
 # Discussion 
 
