@@ -87,7 +87,7 @@ janitor::clean_names()
 
 ### Explore the Dataset 
 
-There are three types of fur colors for squirrels observed in the park, and the table shows the number of adult and juvenile squirrels with different fur colors. 
+There are three types of fur colors for squirrels observed in the park, and the table shows the number of adult and juvenile squirrels with different fur colors. There are 158 squirrels lacking information on fur colors. 
 
 ```{r, echo=FALSE, message = FALSE}
 demo = 
@@ -327,6 +327,7 @@ From the boxplot and bubble plot above we can roughly see the relationship betwe
 
 
 $$ Rate \ of \ Squirrel \ Observed \sim \beta_0 + \beta_1 temperature + \beta_2 litterSome + \beta_3 litterAbundant +\beta_4 conditionsModerate +\beta_5 conditionsMedium +\beta_6 conditionsBusy + \varepsilon_i,$$
+
 ```{r, echo = FALSE, message= FALSE}
 hectare_model=hectare%>%
   mutate(
