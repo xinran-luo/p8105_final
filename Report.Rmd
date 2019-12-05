@@ -54,7 +54,7 @@ We believe this project can provide evidence-based information for the Central P
 
 A [recent news article](https://www.nytimes.com/2018/10/06/nyregion/squirrels-central-park.html) published on The New York Times sheds some light on the motivation behind the two-week-long Central Park Squirrel Census. Despite the ubiquity of the Eastern gray, not much was known about it that we, as humans, should have figured out from a while ago. The value of such a census was not just to delineate a specific behaviour pattern of the Eastern gray, but to draw a big picture of the squirrels, the park, and us. We were inspired by the behind-scene motivation of such study and aimed to create this website that has interactive features to learn more about the distribution of the squirrel population and factors that may affect their behaviour patterns. 
 
-We believe such interactive visualization allows squirrel-lovers to pick a place to better spot the squirrels and to allow Central Park’ management team to build a better environment for the squirrel community. 
+We believe such interactive visualization allows squirrel-lovers to pick a place to better spot the squirrels and to allow Central Park’s management team to build a better environment for the squirrel community. 
 
 
 # Initial Questions
@@ -75,7 +75,7 @@ In this project, we aimed to examine factors associated with the distribution of
 1. [2018 Central Park Squirrel Census - Squirrel data](https://data.cityofnewyork.us/Environment/2018-Central-Park-Squirrel-Census-Squirrel-Data/vfnx-vebw) contains 3023 squirrels' information,  including location coordinates, age, primary and secondary fur color, elevation, activities, communications, and interactions between squirrels and their predators or humans.
 
 2. [2018 Central Park Squirrel Census - Hectare Data](https://data.cityofnewyork.us/Environment/2018-Central-Park-Squirrel-Census-Hectare-Data/ej9h-v6g2)
-contains environmental data for the 350 “countable” hectares in Central Park, including temperature, litter, noise, animals besides of squirrels sighted, and human density.
+contains environmental data for the 350 “countable” hectares in Central Park, including temperature, litter, noise, animals besides squirrels sighted, and human density.
 
 
 # Exploratory analysis
@@ -117,7 +117,7 @@ demographic_info
 ```
 
 
-For easier analysis on the two datasets, we created following new variables: 
+For easier analysis of the two datasets, we created the following new variables: 
 
 `temperature_fehrenheit` : temperatures for different time during a day. 
 
@@ -185,10 +185,10 @@ temperature_df
 
 ```
 
-During the study period (10/7/2018-10/19/2018), the temperatures' range is between 50 and 70 degrees Fahrenheit.Below 50 degrees Fahrenheit, the number of squirrels observed drastically declined. Above 50, the change on rate of squirrel observed is not significant. 
+During the study period (10/7/2018-10/19/2018), the temperatures' range is between 50 and 70 degrees Fahrenheit.Below 50 degrees Fahrenheit, the number of squirrels observed drastically declined. Above 50, the change in the rate of squirrel observed is not significant. 
 
 
-#### Bubble plot for rate of squirrel observed 
+#### Bubble plot for the rate of squirrel observed 
 
 The bubble plot describes how conditions affect the rate of squirrel with different levels of litter amount
 
@@ -246,14 +246,14 @@ plot
 ```
 
 
-The amount of litter and noise levels in the environment did not affect squirrel distribution much; however, when there was an abundant amount of litters and high level of noise in the environment, the number of squirrels at the lowest.   
+The amount of litter and noise levels in the environment did not affect squirrel distribution much; however, when there was an abundant amount of litter and high level of noise in the environment, the number of squirrels at the lowest.   
 
 This partially aligns with our expectations that squirrels stay away from the crowds and occupied areas but why other levels of litter and noise did not affect the number of squirrels as much worths further investigation.  
 
 
 #### Line Graph for Each Activity Counts
 
-This graph indicates the total activity frequency for juvenile and adult squirrels during study period. The activity includes non-interactive and interactive with predators or human. 
+This graph indicates the total activity frequency for juvenile and adult squirrels during study period. The activity includes non-interactive and interactive with predators or humans. 
 
 ```{r, echo = FALSE}
 squrriel %>% 
