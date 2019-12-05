@@ -363,6 +363,8 @@ Different from the boxplot, instead of `temperature category`, we use the contin
 
 The negative estimates of `litterAbundant` and `hectare_conditionsBusy` indicate that when litter is abundant and there is a high level of noise in the hectare, there will be least squirrels observed within every sighting time unit, which is also consistent with the visualization above. However, the amount of litter and level of noise are not significantly associated with rate of squirrel observed, which may be due to small sample size and the presence of missing values.
 
+Since the behaviors of squirrels have more than 2 categories we wanted to fit a multinomial logistic regression to predict squirrels’ behaviors but the outcome variable does not follow a multinomial distribution so multinomial logistic regression is not appropriate here. Since most of the squirrels have several behaviors(running, eating, foraging etc.) observed on the same day while in a multinomial logistic regression, only one behavior should be observed for one squirrel. 
+
 # Discussion 
 
 It is interesting to see how various factors including temperature, park condition, influence both squirrel’s own behaviours as well as their interactions with the external environment (including humans and potential predators). 
