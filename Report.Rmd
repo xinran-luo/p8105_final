@@ -61,7 +61,7 @@ We believe such interactive visualization allows squirrel-lovers to pick a place
 
 In this project, we aimed to examine factors associated with the distribution of the squirrel population in Central Park as well as factors that may be important in predicting certain squirrel behaviours and squirrel-human/predator interactions. Our last aim was to predict and visualize different behaviour pattern of the squirrels. We therefore proposed the following research questions: 
 
-* How does squirrel fur color change throughout different hectares in Central park?
+* How does squirrel fur color change throughout different locations in Central Park?
 
 * What factors affect squirrel distribution in Central Park? If any association exists, how can we visualize it? 
 
@@ -98,19 +98,19 @@ There are three types of fur colors for squirrels observed in the park, and the 
 
 ```{r, echo=FALSE, message = FALSE}
 demo = 
-squrriel %>% 
-  select(age, primary_fur_color) %>% 
-  rename("Age_group" = age) %>% 
-  count(Age_group, primary_fur_color) 
+squrriel %>%   
+mutate(primary_fur_color = ifelse(primary_fur_color %in% "Cinnamon", "Cinnamon", ifelse(primary_fur_color %in% "Gray", "Gray", ifelse(primary_fur_color %in% "Black", "Black", "Unkown"))),
+         age_group = ifelse(age %in% "Juvenile", "Juvenile",ifelse(age %in% "Adult", "Adult", "Unknown"))) %>% 
+  select(age_group, primary_fur_color) %>% 
+  count(age_group, primary_fur_color) 
 
 demographic_info =
 demo %>% 
-  na.omit() %>% 
-  filter(Age_group != "?") %>% 
 pivot_wider(
     names_from = "primary_fur_color",
     values_from = "n"
   ) %>% 
+  mutate(total = Black + Cinnamon + Gray + Unkown) %>% 
 knitr::kable()
 demographic_info
 
@@ -253,11 +253,12 @@ This partially aligns with our expectations that squirrels stay away from the cr
 
 #### Line Graph for Each Activity Counts
 
-This graph indicates the total activity frequency for juvenile and adult squirrels during study period. The activity includes non-interative and interative with predators or human. 
+This graph indicates the different activity frequency for juvenile and adult squirrels during study period. The activity includes non-interative and interative with predators or human. 
 
 ```{r, echo = FALSE}
 squrriel %>% 
-  mutate(Day = recode(Day, "Day1"=1, "Day2"=2, "Day3"=3, "Day4"=4, "Day5"=5, "Day6"=6, "Day7"=7, "Day8"=8, "Day9"=9, "Day10"=10, "Day11"=11)) %>% 
+  mutate(Day = recode(Day, "Day1"=1, "Day2"=2, "Day3"=3, "Day4"=4, "Day5"=5, "Day6"=6, "Day7"=7, "Day8"=8, "Day9"=9, "Day10"=10, "Day11"=11),
+         age_group = ifelse(age_group %in% "Juvenile", "Juvenile",ifelse(age_group %in% "Adult", "Adult", "Unknown"))) %>% 
   group_by(Day, age_group) %>% 
   summarise(
     running = sum(running == "TRUE"),
@@ -290,7 +291,8 @@ geom_line(aes(color=activity))+
   
 ```
 
-Generally, the activity frequency is significantly higher among adult squirrels than juvenile. 
+
+Because the large number of Adult group, the total number of each activity in adult group is significantly larger than other group. But we could see the obvious trend of decreacing number of activities along with days. 
 
 
 #### Bar Graph for Comparison Between Interative and Non-interative Activity Counts
@@ -300,6 +302,8 @@ This graphs show the frequency of squirrel's non-interative and interative activ
 
 ```{r, echo = FALSE}
 squrriel %>% 
+   mutate(
+         age_group = ifelse(age_group %in% "Juvenile", "Juvenile",ifelse(age_group %in% "Adult", "Adult", "Unknown"))) %>% 
   group_by(Day) %>% 
   summarise(
     running = sum(running == "TRUE"),
