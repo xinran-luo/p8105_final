@@ -253,7 +253,7 @@ This partially aligns with our expectations that squirrels stay away from the cr
 
 #### Line Graph for Each Activity Counts
 
-This graph indicates the total activity frequency for juvenile and adult squirrels during study period. The activity includes non-interative and interative with predators or human. 
+This graph indicates the total activity frequency for juvenile and adult squirrels during study period. The activity includes non-interactive and interactive with predators or human. 
 
 ```{r, echo = FALSE}
 squrriel %>% 
@@ -293,9 +293,9 @@ geom_line(aes(color=activity))+
 Generally, the activity frequency is significantly higher among adult squirrels than juvenile. 
 
 
-#### Bar Graph for Comparison Between Interative and Non-interative Activity Counts
+#### Bar Graph for Comparison Between interactive and Non-interactive Activity Counts
 
-This graphs show the frequency of squirrel's non-interative and interative activities with predactors  or human in the park.
+This graphs show the frequency of squirrel's non-interactive and interactive activities with predators  or human in the park.
 
 
 ```{r, echo = FALSE}
@@ -326,7 +326,7 @@ mutate(noninteraction = running + chasing + climbing + eating + foraging,
          barmode = 'group')
 ```
 
-Overall, non-interative activity counts were higher than interactive activity counts for the whole study period.There was an obvious decreasing trend on both activity counts during the last few days. 
+Overall, non-interactive activity counts were higher than interactive activity counts for the whole study period.There was an obvious decreasing trend on both activity counts during the last few days. 
 
 # Statistical Analysis
 
