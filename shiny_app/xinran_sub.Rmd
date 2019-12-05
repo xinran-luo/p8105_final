@@ -46,7 +46,7 @@ select(-month, -year,-color_notes, -specific_location, -other_activities, -other
 
 Column {.sidebar}
 -----------------------------------------------------------------------
-
+The interactive map shows the spatial distribution of squirrels in Central Park. By selecting the fur colors of the squirrels and the sighting days, we can see different numbers of squirrels observed at different locations. Squirrels with gray primary fur color were mostly observed. The map can be a potential tool for squirrel-lovers to spot the lovely creatures and help to frame the environment improvement strategy for the squirrel community.
 
 ```{r}
 fur_color = squrriel %>% distinct(primary_fur_color) %>% pull()
@@ -67,7 +67,7 @@ selectInput(
 
 
 
-Column {data-width=1000}
+Column {data-width=800}
 -----------------------------------------------------------------------
 
 ### The distribution of squirriels by fur color and sighting day
