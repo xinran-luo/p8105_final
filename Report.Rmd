@@ -295,7 +295,11 @@ geom_line(aes(color=activity))+
 
 
 
-Because the large number of Adult group, the total number of each activity in adult group is significantly larger than other group. But we could see the obvious trend of decreacing number of activities along with days. 
+Because the large number of Adult group, the total number of each activity in adult group is significantly larger than other groups. But we could see the obvious decreasing trend of numbers of activities along with days. We did further research on potential factors that might affect the total number of each activity, including temperature and observation time. 
+
+By comparing the mean temperature and mean observation time across the study period, we didn't find significant difference in those variables between different days. So there are other factors that affect the activity frequency, such as event schedule and observation spot. Further investigation is needed to explore the reason for frequency changing.
+
+
 
 
 
@@ -335,6 +339,7 @@ mutate(noninteraction = running + chasing + climbing + eating + foraging,
 ```
 
 Overall, non-interactive activity counts were higher than interactive activity counts for the whole study period.There was an obvious decreasing trend in both activity counts during the last few days. 
+
 
 # Statistical Analysis
 
