@@ -294,7 +294,7 @@ $(document).ready(function () {
   <a href="https://junyinxixi.shinyapps.io/shiny_2">Squirrel Activities</a>
 </li>
 <li>
-  <a href="https://xinran-hhh.shinyapps.io/shiny_app/">Spatial visualization</a>
+  <a href="https://xinran-hhh.shinyapps.io/shiny_app/">Spatial Visualization</a>
 </li>
 <li>
   <a href="mailto:&lt;xl2851@cumc.columbia.edu&gt;">
@@ -347,7 +347,8 @@ mutate(Day = recode(Date, &quot;06&quot;=&quot;Day1&quot;, &quot;07&quot;=&quot;
 <div id="descriptive-statistics" class="section level2">
 <h2>Descriptive Statistics</h2>
 <pre class="r"><code>squrriel %&gt;% 
-  mutate(Day = recode(Day, &quot;Day1&quot;=1, &quot;Day2&quot;=2, &quot;Day3&quot;=3, &quot;Day4&quot;=4, &quot;Day5&quot;=5, &quot;Day6&quot;=6, &quot;Day7&quot;=7, &quot;Day8&quot;=8, &quot;Day9&quot;=9, &quot;Day10&quot;=10, &quot;Day11&quot;=11)) %&gt;% 
+  mutate(Day = recode(Day, &quot;Day1&quot;=1, &quot;Day2&quot;=2, &quot;Day3&quot;=3, &quot;Day4&quot;=4, &quot;Day5&quot;=5, &quot;Day6&quot;=6, &quot;Day7&quot;=7, &quot;Day8&quot;=8, &quot;Day9&quot;=9, &quot;Day10&quot;=10, &quot;Day11&quot;=11),
+         age_group = ifelse(age_group %in% &quot;Juvenile&quot;, &quot;Juvenile&quot;,ifelse(age_group %in% &quot;Adult&quot;, &quot;Adult&quot;, &quot;Unknown&quot;))) %&gt;% 
   group_by(Day, age_group) %&gt;% 
   summarise(
     running = sum(running == &quot;TRUE&quot;),
@@ -401,12 +402,18 @@ mutate(noninteraction = running + chasing + climbing + eating + foraging,
   select(Day,noninteraction, interaction) %&gt;% 
  plot_ly(x = ~Day, y = ~interaction, type = &#39;bar&#39;, name = &#39;Interaction&#39;, marker = list(color = &#39;rgb(149,130,189)&#39;)) %&gt;%
   add_trace(y = ~noninteraction, name = &#39;Noninteraction&#39;, marker = list(color = &#39;rgb(100,100,100)&#39;)) %&gt;%
-  layout(xaxis = list(title = &quot;&quot;, tickangle = -45),
-         yaxis = list(title = &quot;&quot;),
+  layout(title=&quot;Frequency of Dichotomized Activity Among All Sighting Day&quot;,
+    xaxis = list(title = &quot;Day&quot;, tickangle = -45),
+         yaxis = list(title = &quot;Frequency&quot;),
          margin = list(b = 200),
          barmode = &#39;group&#39;)</code></pre>
+<<<<<<< HEAD
 <div id="htmlwidget-5ae2ec3befa4ed0314ce" style="width:90%;height:576px;" class="plotly html-widget"></div>
 <script type="application/json" data-for="htmlwidget-5ae2ec3befa4ed0314ce">{"x":{"visdat":{"33687a07266":["function () ","plotlyVisDat"]},"cur_data":"33687a07266","attrs":{"33687a07266":{"x":{},"y":{},"marker":{"color":"rgb(149,130,189)"},"name":"Interaction","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"},"33687a07266.1":{"x":{},"y":{},"marker":{"color":"rgb(100,100,100)"},"name":"Noninteraction","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar","inherit":true}},"layout":{"margin":{"b":200,"l":60,"t":25,"r":10},"xaxis":{"domain":[0,1],"automargin":true,"title":"","tickangle":-45,"type":"category","categoryorder":"array","categoryarray":["Day1","Day2","Day3","Day4","Day5","Day6","Day7","Day8","Day9","Day10","Day11"]},"yaxis":{"domain":[0,1],"automargin":true,"title":""},"barmode":"group","hovermode":"closest","showlegend":true},"source":"A","config":{"showSendToCloud":false},"data":[{"x":["Day1","Day2","Day3","Day4","Day5","Day6","Day7","Day8","Day9","Day10","Day11"],"y":[344,352,277,323,222,415,327,200,184,162,67],"marker":{"color":"rgb(149,130,189)","line":{"color":"rgba(31,119,180,1)"}},"name":"Interaction","type":"bar","error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Day1","Day2","Day3","Day4","Day5","Day6","Day7","Day8","Day9","Day10","Day11"],"y":[425,496,364,430,348,548,452,298,240,189,72],"marker":{"color":"rgb(100,100,100)","line":{"color":"rgba(255,127,14,1)"}},"name":"Noninteraction","type":"bar","error_y":{"color":"rgba(255,127,14,1)"},"error_x":{"color":"rgba(255,127,14,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+=======
+<div id="htmlwidget-baa9f76e6fe58ffac579" style="width:90%;height:576px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-baa9f76e6fe58ffac579">{"x":{"visdat":{"1217acdd472e":["function () ","plotlyVisDat"]},"cur_data":"1217acdd472e","attrs":{"1217acdd472e":{"x":{},"y":{},"marker":{"color":"rgb(149,130,189)"},"name":"Interaction","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"},"1217acdd472e.1":{"x":{},"y":{},"marker":{"color":"rgb(100,100,100)"},"name":"Noninteraction","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar","inherit":true}},"layout":{"margin":{"b":200,"l":60,"t":25,"r":10},"title":"Frequency of Dichotomized Activity Among All Sighting Day","xaxis":{"domain":[0,1],"automargin":true,"title":"Day","tickangle":-45,"type":"category","categoryorder":"array","categoryarray":["Day1","Day2","Day3","Day4","Day5","Day6","Day7","Day8","Day9","Day10","Day11"]},"yaxis":{"domain":[0,1],"automargin":true,"title":"Frequency"},"barmode":"group","hovermode":"closest","showlegend":true},"source":"A","config":{"showSendToCloud":false},"data":[{"x":["Day1","Day2","Day3","Day4","Day5","Day6","Day7","Day8","Day9","Day10","Day11"],"y":[344,352,277,323,222,415,327,200,184,162,67],"marker":{"color":"rgb(149,130,189)","line":{"color":"rgba(31,119,180,1)"}},"name":"Interaction","type":"bar","error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Day1","Day2","Day3","Day4","Day5","Day6","Day7","Day8","Day9","Day10","Day11"],"y":[425,496,364,430,348,548,452,298,240,189,72],"marker":{"color":"rgb(100,100,100)","line":{"color":"rgba(255,127,14,1)"}},"name":"Noninteraction","type":"bar","error_y":{"color":"rgba(255,127,14,1)"},"error_x":{"color":"rgba(255,127,14,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+>>>>>>> 592090b675d15b7c275a0acdd274f2daf5a362f0
 </div>
 
 
