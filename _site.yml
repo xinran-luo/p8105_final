@@ -4,7 +4,7 @@ navbar:
   title: "Home"
   left: 
     - text: "Screencast"
-      href: https://www.youtube.com/watch?v=w0f71f2ViCs&feature=youtu.be
+      href: https://youtu.be/w0f71f2ViCs
   right:
     - text: "Report"
       href: Report.html
