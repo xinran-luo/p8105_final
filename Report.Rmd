@@ -331,7 +331,6 @@ mutate(noninteraction = running + chasing + climbing + eating + foraging,
   layout(title="Frequency of Dichotomized Activity Among All Sighting Day",
     xaxis = list(title = "Day"),
          yaxis = list(title = "Frequency"),
-         margin = list(b = 200),
          barmode = 'group')
 ```
 
