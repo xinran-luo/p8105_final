@@ -326,7 +326,7 @@ Overall, non-interative activity counts were higher than interactive activity co
 From the boxplot and bubble plot above we can roughly see the relationship between the rate of squirrel observed and temperature, litter and hectare conditions. After filtering the missing values in "litter" and "hectare_conditions", we fit a linear regression model to formally test for these associations.
 
 
-$$ Rate \ of \ Squirrel \ Observed \sim \beta_0 + \beta_1 temperature + \beta_2 litterSome + \beta_3 litterAbundant +\beta_4 conditionsModerate +\beta_5 conditionsMedium +\beta_6 conditionsBusy + \varepsilon_i,$$
+$$ Rate \ of \ Squirrel \ Observed \sim \beta_0 + \beta_1 temperature + \beta_2 litterSome + \beta_3 litterAbundant +\beta_4 conditionsModerate +\beta_5 conditionsMedium +\beta_6 conditionsBusy + \varepsilon_i$$
 ```{r, echo = FALSE, message= FALSE}
 hectare_model=hectare%>%
   mutate(
@@ -353,6 +353,8 @@ broom::tidy() %>%
 Different from the boxplot, instead of `temperature category`, we use the continuous variable `temperature_fahrenheit` in the model because we want to make full use of the dataset and increase the power of the hypothesis test. Consistent with the boxplot above, we have enough evidence to claim that there would be more squirrels observed when temperature is higher, at 5% level of significance.
 
 The negative estimates of `litterAbundant` and `hectare_conditionsBusy` indicate that when litter is abundant and there is a high level of noise in the hectare, there will be least squirrels observed within every sighting time unit, which is also consistent with the visualization above. However, the amount of litter and level of noise are not significantly associated with rate of squirrel observed, which may be due to small sample size and the presence of missing values.
+
+Since the behaviors of squirrels have more than 2 categories we wanted to fit a multinomial logistic regression to predict squirrels’ behaviors but the outcome variable does not follow a multinomial distribution so multinomial logistic regression is not appropriate here. Since most of the squirrels have several behaviors(running, eating, foraging etc.)  observed on the same day while in a multinomial logistic regression, only one behavior should be observed for one squirrel. 
 
 # Discussion 
 
