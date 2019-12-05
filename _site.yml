@@ -2,9 +2,6 @@ name: "Picnic with Squirrels in Central Park"
 output_dir: "."
 navbar:
   title: "Home"
-  left: 
-    - text: "Screencast"
-      href: https://youtu.be/w0f71f2ViCs
   right:
     - text: "Report"
       href: Report.html
