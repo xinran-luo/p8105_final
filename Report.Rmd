@@ -253,11 +253,9 @@ This partially aligns with our expectations that squirrels stay away from the cr
 
 #### Line Graph for Each Activity Counts
 
-<<<<<<< HEAD
+
 This graph indicates the different activity frequency for juvenile and adult squirrels during study period. The activity includes non-interative and interative with predators or human. 
-=======
-This graph indicates the total activity frequency for juvenile and adult squirrels during study period. The activity includes non-interactive and interactive with predators or humans. 
->>>>>>> 117226b2e8bc6b5686ee1619b19e293ffd97fbbb
+
 
 ```{r, echo = FALSE}
 squrriel %>% 
@@ -295,12 +293,10 @@ geom_line(aes(color=activity))+
   
 ```
 
-<<<<<<< HEAD
+
 
 Because the large number of Adult group, the total number of each activity in adult group is significantly larger than other group. But we could see the obvious trend of decreacing number of activities along with days. 
-=======
-Generally, the activity frequency is significantly higher among adult squirrels than juveniles. 
->>>>>>> 117226b2e8bc6b5686ee1619b19e293ffd97fbbb
+
 
 
 #### Bar Graph for Comparison Between interactive and Non-interactive Activity Counts
