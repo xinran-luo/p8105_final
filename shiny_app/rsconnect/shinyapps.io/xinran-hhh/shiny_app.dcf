@@ -5,6 +5,6 @@ account: xinran-hhh
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 1550904
-bundleId: 2633485
+bundleId: 2643916
 url: https://xinran-hhh.shinyapps.io/shiny_app/
-when: 1575319912.40749
+when: 1575558968.34686
