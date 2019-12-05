@@ -1,5 +1,5 @@
 ---
-title: "Shiny Graph"
+title: "Squirrel Activities"
 output: 
   flexdashboard::flex_dashboard:
     orientation: columns
@@ -161,7 +161,7 @@ selectInput(
 Column {data-width=600}
 -----------------------------------------------------------------------
 
-### Chart A
+### Frequency of Activity Among All Sighting Days
 
 ```{r}
 renderPlotly({ 
@@ -170,7 +170,11 @@ squrriel_plot %>%
       activity == input[["Activity"]], 
       age_group == input[["Age Group"]]) %>% 
   mutate(text_label=number_of_ture)%>%
- plot_ly(x = ~Day, y = ~number_of_ture, type = "scatter", mode =  "markers", linetype = I("dash"))
+ plot_ly(x = ~Day, y = ~number_of_ture, type = "scatter", mode =  "markers", linetype = I("dash")) %>% 
+     layout(
+         xaxis = list(title = "Day"),
+         yaxis = list(title = "Frequency")
+     )
 })
    
 
@@ -178,7 +182,7 @@ squrriel_plot %>%
 
 
 
-### Chart B
+### Distribution of Activity In One Day
 
 ```{r}
 renderPlotly({ 
@@ -187,7 +191,7 @@ squrriel_plot_2 %>%
       Day == input[["sighting day"]]) %>% 
 plot_ly(labels = ~activity, values = ~number_of_ture) %>%
   add_pie(hole = 0.6) %>%
-  layout(title = "Distribution of Activity In One Day",  showlegend = F,
+  layout(
          xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
          yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
 })
@@ -197,7 +201,7 @@ plot_ly(labels = ~activity, values = ~number_of_ture) %>%
 
 Column {data-width=400}
 -----------------------------------------------------------------------
-### Chart C
+### Frequency of Dichotomized Activity Among All Sighting Day
 
 ```{r}
 renderPlotly({ 
@@ -206,8 +210,8 @@ squrriel_plot_3 %>%
       age_group == input[["Age Group"]]) %>% 
  plot_ly(x = ~Day, y = ~interaction, type = 'bar', name = 'Interaction', marker = list(color = 'rgb(149,130,189)')) %>%
   add_trace(y = ~noninteraction, name = 'Noninteraction', marker = list(color = 'rgb(100,100,100)')) %>%
-  layout(xaxis = list(title = "", tickangle = -45),
-         yaxis = list(title = ""),
+  layout(xaxis = list(title = "Day", tickangle = -45),
+         yaxis = list(title = "Frequency"),
          margin = list(b = 200),
          barmode = 'group')
 })
