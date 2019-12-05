@@ -3,10 +3,21 @@ title: "Picnic with Squirrels in Central Park"
 output: 
   html_document
 ---
+<style type="text/css">
+
+h1.title {
+  font-size: 45px;
+  color: BLACK;
+  text-align: center;
+}
+
+</style>
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
+<center> __Xinran Luo, Jun Yin, Roxana Yan, Anran Shao __ </center>
 
 ![](squirrel1.jpg)
 
