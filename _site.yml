@@ -10,7 +10,7 @@ navbar:
       href: Report.html
     - text: "Squirrel Activities"
       href: https://junyinxixi.shinyapps.io/shiny_2
-    - text: "Spatial visualization"
+    - text: "Spatial Visualization"
       href: https://xinran-hhh.shinyapps.io/shiny_app/
     - icon: fa-envelope fa-lg
       href: mailto:<xl2851@cumc.columbia.edu>
