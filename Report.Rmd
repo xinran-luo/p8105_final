@@ -59,6 +59,8 @@ In this project, we aimed to examine factors associated with the distribution of
 
 * What factors affect squirrel distribution in Central Park? If any association exists, how can we visualize it? 
 
+* How does temperature affect the number of squirrels observed? 
+
 * How can we predict and visualize squirrel’s behaviour and/or their interaction with humans/predators based on ambient environment and temperature?
 
 
