@@ -332,7 +332,7 @@ Overall, non-interative activity counts were higher than interactive activity co
 
 From the boxplot and bubble plot above we can roughly see the relationship between the rate of squirrel observed and temperature, litter and hectare conditions. After filtering the missing values in "litter" and "hectare_conditions", we fit a linear regression model to formally test for these associations.
 
-$$ Rate \ of \ Squirrel \ Observed \sim \beta_0 + \beta_1 temperature + \beta_2 litterSome + \beta_3 litterAbundant +\beta_4 conditionsModerate +\beta_5 conditionsMedium +\beta_6 conditionsBusy + \varepsilon_i,$$
+$$Rate \ of \ Squirrel \ Observed \sim \beta_0 + \beta_1 temperature + \beta_2 litterSome + \beta_3 litterAbundant +\beta_4 conditionMod +\beta_5 conditionMed +\beta_6 conditionBusy + \varepsilon_i$$
 
 
 
