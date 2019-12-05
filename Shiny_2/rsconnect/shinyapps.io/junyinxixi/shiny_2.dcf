@@ -5,6 +5,6 @@ account: junyinxixi
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 1550999
-bundleId: 2633480
+bundleId: 2643982
 url: https://junyinxixi.shinyapps.io/shiny_2/
-when: 1575319762.63719
+when: 1575560155.21165

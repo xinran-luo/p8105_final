@@ -210,10 +210,10 @@ squrriel_plot_3 %>%
       age_group == input[["Age Group"]]) %>% 
  plot_ly(x = ~Day, y = ~interaction, type = 'bar', name = 'Interaction', marker = list(color = 'rgb(149,130,189)')) %>%
   add_trace(y = ~noninteraction, name = 'Noninteraction', marker = list(color = 'rgb(100,100,100)')) %>%
-  layout(xaxis = list(title = "Day", tickangle = -45),
-         yaxis = list(title = "Frequency"),
+  layout(yaxis = list(title = "Frequency"),
          margin = list(b = 200),
-         barmode = 'group')
+         barmode = 'group') %>% 
+    layout(legend = list(x = 0.8, y = 1.2))
 })
 ```
 
