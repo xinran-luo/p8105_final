@@ -11,19 +11,29 @@ h1.title {
   text-align: center;
 }
 
+.figure {
+   img-top: 100px;
+   img-bottom: 100px;
+}
+
+
 </style>
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-
 <center> __Xinran Luo, Jun Yin, Roxana Yan, Anran Shao __ </center>
 
+<br>
 <center> __<img src="squirrel1.jpg" style="width:90%">__ </center>
 
 
+<br>
+
 "Observing animal behavior at close range may affect the way people think about the environment around them." 
 - *Colin Jerolmack, Chairman of New York University’s Department of Environmental Studies*
+
+<br>
 
 "The wonders of the Eastern gray squirrel have yet to be plumbed, despite — or maybe because of — its ubiquity.There’s not a lot of squirrel data out there. The first step is collecting the squirrel data. You start to see patterns in behavior, and then you can use the data for any research you’re working on." - *Jamie Allen, writer*
 
