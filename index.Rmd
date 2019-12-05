@@ -4,9 +4,20 @@ output:
   html_document
 ---
 
+<style type="text/css">
+
+h1.title {
+  font-size: 38px;
+  color: black;
+  text-align: center;
+}
+</style>
+
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-Xinran Luo, Jun Yin, Roxana Yan, Anran Shao 
+<center> __Xinran Luo, Jun Yin, Roxana Yan, Anran Shao __ </center>
+
 ![](squirrel1.jpg)
 
